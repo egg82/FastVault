@@ -57,7 +57,12 @@
         <mchat.version>1.8.5</mchat.version>
         <mchatsuite.version>DEV-b275</mchatsuite.version>
 
+        <boseconomy.version>0.7.3.1a</boseconomy.version>
         <commandsex.version>1.98</commandsex.version>
+        <craftconomy.version>2.3.5</craftconomy.version>
+        <craftconomy3.version>3.2.2-SNAPSHOT</craftconomy3.version>
+        <currency.version>0.61</currency.version>
+        <digicoin.version>0.1</digicoin.version>
 	</properties>
 
     <profiles>

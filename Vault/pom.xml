@@ -286,34 +286,72 @@
         </dependency>
 
         <dependency>
+            <groupId>cosine.boseconomy.BOSEconomy</groupId>
+            <artifactId>BOSEconomy</artifactId>
+            <version>${boseconomy.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.github.zathrus_writer.commandsex</groupId>
             <artifactId>CommandsEX</artifactId>
             <version>${commandsex.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.gmail.bleedobsidian.miconomy</groupId>
-            <artifactId>MiConomy</artifactId>
-            <version>1.0</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/MiConomy.jar</systemPath>
+            <groupId>me.greatman.Craftconomy</groupId>
+            <artifactId>Craftconomy</artifactId>
+            <version>${craftconomy.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>me.coniin.plugins.minefaconomy</groupId>
-            <artifactId>MineFaConomy</artifactId>
-            <version>0.2</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/Minefaconomy.jar</systemPath>
+            <groupId>com.greatmancode</groupId>
+            <artifactId>craftconomy3</artifactId>
+            <version>${craftconomy3.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>is.currency</groupId>
             <artifactId>Currency</artifactId>
-            <version>0.61</version>
+            <version>${currency.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>co.uk.silvania.cities.digicoin</groupId>
+            <artifactId>DigiCoin</artifactId>
+            <version>${digicoin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.gravypod.Dosh</groupId>
+            <artifactId>Dosh</artifactId>
+            <version>1.0</version>
             <optional>true</optional>
             <scope>system</scope>
-            <systemPath>${main.basedir}/lib/CurrencyCore.jar</systemPath>
+            <systemPath>${main.basedir}/lib/Dosh.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ca.agnate.EconXP.EconXP</groupId>
+            <artifactId>EconXP</artifactId>
+            <version>0.4.1</version>
+            <optional>true</optional>
+            <scope>system</scope>
+            <systemPath>${main.basedir}/lib/EconXP.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.earth2me.essentials.Essentials</groupId>
+            <artifactId>Essentials</artifactId>
+            <version>2.9.2</version>
+            <optional>true</optional>
+            <scope>system</scope>
+            <systemPath>${main.basedir}/lib/Essentials.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>me.ethan.eWallet.ECO</groupId>
+            <artifactId>eWallet</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>system</scope>
+            <systemPath>${main.basedir}/lib/eWallet.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.igwb.GoldenChest</groupId>
@@ -332,36 +370,12 @@
             <systemPath>${main.basedir}/lib/GoldIsMoney2.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>cosine.boseconomy.BOSEconomy</groupId>
-            <artifactId>BOSEconomy</artifactId>
-            <version>0.7.3.1a</version>
+            <groupId>Gringotts</groupId>
+            <artifactId>Gringotts</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
             <optional>true</optional>
             <scope>system</scope>
-            <systemPath>${main.basedir}/lib/BOSEconomy.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>ca.agnate.EconXP.EconXP</groupId>
-            <artifactId>EconXP</artifactId>
-            <version>0.4.1</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/EconXP.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>me.ethan.eWallet.ECO</groupId>
-            <artifactId>eWallet</artifactId>
-            <version>1.0</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/eWallet.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>boardinggamer.mcmoney</groupId>
-            <artifactId>McMoney</artifactId>
-            <version>1.2</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/McMoney.jar</systemPath>
+            <systemPath>${main.basedir}/lib/Gringotts.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.iCo6.iConomy</groupId>
@@ -372,12 +386,20 @@
             <systemPath>${main.basedir}/lib/iConomy6.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.gmail.mirelatrue.xpbank.XPBank</groupId>
-            <artifactId>XPBank</artifactId>
-            <version>0.9</version>
+            <groupId>boardinggamer.mcmoney</groupId>
+            <artifactId>McMoney</artifactId>
+            <version>1.2</version>
             <optional>true</optional>
             <scope>system</scope>
-            <systemPath>${main.basedir}/lib/XPBank.jar</systemPath>
+            <systemPath>${main.basedir}/lib/McMoney.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.gmail.bleedobsidian.miconomy</groupId>
+            <artifactId>MiConomy</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>system</scope>
+            <systemPath>${main.basedir}/lib/MiConomy.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.mjolnir.mineconomy.MineConomy</groupId>
@@ -388,50 +410,20 @@
             <systemPath>${main.basedir}/lib/MineConomy.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>me.coniin.plugins.minefaconomy</groupId>
+            <artifactId>MineFaConomy</artifactId>
+            <version>0.2</version>
+            <optional>true</optional>
+            <scope>system</scope>
+            <systemPath>${main.basedir}/lib/Minefaconomy.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>me.ashtheking.currency.Currency</groupId>
             <artifactId>MultiCurrency</artifactId>
             <version>0.1</version>
             <optional>true</optional>
             <scope>system</scope>
             <systemPath>${main.basedir}/lib/MultiCurrency.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.nijikokun.register</groupId>
-            <artifactId>Register</artifactId>
-            <version>1.5</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/Register.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>me.greatman.Craftconomy</groupId>
-            <artifactId>Craftconomy</artifactId>
-            <version>2.3.5</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/Craftconomy.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.greatmancode</groupId>
-            <artifactId>craftconomy3</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>Gringotts</groupId>
-            <artifactId>Gringotts</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/Gringotts.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.gravypod.Dosh</groupId>
-            <artifactId>Dosh</artifactId>
-            <version>1.0</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/Dosh.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.omwah</groupId>
@@ -450,21 +442,21 @@
             <systemPath>${main.basedir}/lib/TAEcon.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>co.uk.silvania.cities.digicoin</groupId>
-            <artifactId>DigiCoin</artifactId>
-            <version>0.1</version>
+            <groupId>com.gmail.mirelatrue.xpbank.XPBank</groupId>
+            <artifactId>XPBank</artifactId>
+            <version>0.9</version>
             <optional>true</optional>
             <scope>system</scope>
-            <systemPath>${main.basedir}/lib/DigiCoin.jar</systemPath>
+            <systemPath>${main.basedir}/lib/XPBank.jar</systemPath>
         </dependency>
 
         <dependency>
-            <groupId>com.earth2me.essentials.Essentials</groupId>
-            <artifactId>Essentials</artifactId>
-            <version>2.9.2</version>
+            <groupId>com.nijikokun.register</groupId>
+            <artifactId>Register</artifactId>
+            <version>1.5</version>
             <optional>true</optional>
             <scope>system</scope>
-            <systemPath>${main.basedir}/lib/Essentials.jar</systemPath>
+            <systemPath>${main.basedir}/lib/Register.jar</systemPath>
         </dependency>
 
         <dependency>

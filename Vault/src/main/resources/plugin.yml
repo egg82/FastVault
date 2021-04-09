@@ -33,7 +33,11 @@ softdepend:
   - 'mChat'
   - 'mChatSuite'
 # Economy
+  - 'BOSEconomy'
   - 'CommandsEx'
+  - 'Craftconomy3'
+  - 'CurrencyCore'
+  - 'DigiCoin'
 
 main: 'net.milkbowl.vault.Vault'
 load: 'STARTUP'
