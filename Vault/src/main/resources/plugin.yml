@@ -29,6 +29,7 @@ softdepend:
   - 'vPerms'
   - 'Xperms'
   # Chat
+  - 'EssentialsChat'
   - 'iChat'
   - 'mChat'
   - 'mChatSuite'

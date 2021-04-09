@@ -19,13 +19,16 @@ package net.milkbowl.vault.economy;
  * Indicates a typical Return for an Economy method.
  * It includes a {@link ResponseType} indicating whether the plugin currently being used for Economy actually allows
  * the method, or if the operation was a success or failure.
+ *
+ * @deprecated in FastVault in favor of {@link net.milkbowl.vault.VaultAPI}
  */
+@Deprecated
 public class EconomyResponse {
 
     /**
      * Enum for types of Responses indicating the status of a method call.
      */
-    public static enum ResponseType {
+    public enum ResponseType {
         SUCCESS(1),
         FAILURE(2),
         NOT_IMPLEMENTED(3);
@@ -79,12 +82,5 @@ public class EconomyResponse {
      *
      * @return Value
      */
-    public boolean transactionSuccess() {
-        switch (type) {
-            case SUCCESS:
-                return true;
-            default:
-                return false;
-        }
-    }
+    public boolean transactionSuccess() { return type == ResponseType.SUCCESS; }
 }

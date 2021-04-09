@@ -281,6 +281,12 @@
         </dependency>
 
         <dependency>
+            <groupId>net.ess3</groupId>
+            <artifactId>EssentialsXChat</artifactId>
+            <version>${essentialsx.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>net.TheDgtl.iChat.iChat</groupId>
             <artifactId>iChat</artifactId>
             <version>${ichat.version}</version>
@@ -351,6 +357,12 @@
             <groupId>com.earth2me.essentials.Essentials</groupId>
             <artifactId>Essentials</artifactId>
             <version>${essentials.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.ess3</groupId>
+            <artifactId>EssentialsX</artifactId>
+            <version>${essentialsx.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

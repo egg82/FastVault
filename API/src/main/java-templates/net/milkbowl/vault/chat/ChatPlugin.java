@@ -9,6 +9,7 @@ public enum ChatPlugin {
     B_PERMISSIONS("bPermissions", "${bpermissions.version}", "bPermissions"),
     B_PERMISSIONS2("bPermissions2", "${bpermissions.version}", "bPermissions"),
     DROX_PERMS("DroxPerms", "${droxperms.version}", "DroxPerms"),
+    ESSENTIALS_X_CHAT("EssentialsChat", "${essentialsx.version}", "EssentialsChat"),
     GROUP_MANAGER("GroupManager", "${groupmanager.version}", "GroupManager"),
     I_CHAT("iChat", "${ichat.version}", "iChat"),
     M_CHAT("mChat", "${mchat.version}", "mChat"),

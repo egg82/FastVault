@@ -27,7 +27,10 @@ import java.util.logging.Logger;
 
 /**
  * The main Permission API - allows for group and player based permission tests
+ *
+ * @deprecated in FastVault in favor of {@link net.milkbowl.vault.VaultAPI}
  */
+@Deprecated
 public abstract class Permission {
 
     protected static final Logger log = Logger.getLogger("Minecraft");
@@ -38,21 +41,21 @@ public abstract class Permission {
      *
      * @return Name of Permission Method
      */
-    abstract public String getName();
+    public abstract String getName();
 
     /**
      * Checks if permission method is enabled.
      *
      * @return Success or Failure
      */
-    abstract public boolean isEnabled();
+    public abstract boolean isEnabled();
 
     /**
      * Returns if the permission system is or attempts to be compatible with super-perms.
      *
      * @return True if this permission implementation works with super-perms
      */
-    abstract public boolean hasSuperPermsCompat();
+    public abstract boolean hasSuperPermsCompat();
 
     /**
      * @deprecated As of VaultAPI 1.4 use {@link #playerHas(String, OfflinePlayer, String)} instead.
@@ -108,7 +111,7 @@ public abstract class Permission {
      * @deprecated As of VaultAPI 1.4 use {@link #playerHas(String, OfflinePlayer, String)} instead.
      */
     @Deprecated
-    abstract public boolean playerHas(String world, String player, String permission);
+    public abstract boolean playerHas(String world, String player, String permission);
 
     /**
      * @deprecated As of VaultAPI 1.4 use {@link #playerHas(String, OfflinePlayer, String)} instead.
@@ -166,7 +169,7 @@ public abstract class Permission {
      * But May return odd values if the servers registered permission system does not have a global permission store.
      */
     @Deprecated
-    abstract public boolean playerAdd(String world, String player, String permission);
+    public abstract boolean playerAdd(String world, String player, String permission);
 
     /**
      * @deprecated As of VaultAPI 1.4 use {@link #playerAdd(String, OfflinePlayer, String)} instead.
@@ -311,7 +314,7 @@ public abstract class Permission {
      * @deprecated As of VaultAPI 1.4 use {@link #playerRemove(String, OfflinePlayer, String)} instead.
      */
     @Deprecated
-    abstract public boolean playerRemove(String world, String player, String permission);
+    public abstract boolean playerRemove(String world, String player, String permission);
 
     /**
      * Remove permission from a player.
@@ -412,7 +415,7 @@ public abstract class Permission {
      *
      * @return Success or Failure
      */
-    abstract public boolean groupHas(String world, String group, String permission);
+    public abstract boolean groupHas(String world, String group, String permission);
 
     /**
      * Checks if group has a permission node.
@@ -443,7 +446,7 @@ public abstract class Permission {
      *
      * @return Success or Failure
      */
-    abstract public boolean groupAdd(String world, String group, String permission);
+    public abstract boolean groupAdd(String world, String group, String permission);
 
     /**
      * Add permission to a group.
@@ -474,7 +477,7 @@ public abstract class Permission {
      *
      * @return Success or Failure
      */
-    abstract public boolean groupRemove(String world, String group, String permission);
+    public abstract boolean groupRemove(String world, String group, String permission);
 
     /**
      * Remove permission from a group.
@@ -498,7 +501,7 @@ public abstract class Permission {
      * @deprecated As of VaultAPI 1.4 use {@link #playerInGroup(String, OfflinePlayer, String)} instead.
      */
     @Deprecated
-    abstract public boolean playerInGroup(String world, String player, String group);
+    public abstract boolean playerInGroup(String world, String player, String group);
 
     /**
      * @deprecated As of VaultAPI 1.4 use {@link #playerInGroup(String, OfflinePlayer, String)} instead.
@@ -547,7 +550,7 @@ public abstract class Permission {
      * @deprecated As of VaultAPI 1.4 use {@link #playerAddGroup(String, OfflinePlayer, String)} instead.
      */
     @Deprecated
-    abstract public boolean playerAddGroup(String world, String player, String group);
+    public abstract boolean playerAddGroup(String world, String player, String group);
 
     /**
      * @deprecated As of VaultAPI 1.4 use {@link #playerAddGroup(String, OfflinePlayer, String)} instead.
@@ -596,7 +599,7 @@ public abstract class Permission {
      * @deprecated As of VaultAPI 1.4 use {@link #playerRemoveGroup(String, OfflinePlayer, String)} instead.
      */
     @Deprecated
-    abstract public boolean playerRemoveGroup(String world, String player, String group);
+    public abstract boolean playerRemoveGroup(String world, String player, String group);
 
     /**
      * @deprecated As of VaultAPI 1.4 use {@link #playerRemoveGroup(String, OfflinePlayer, String)} instead.
@@ -645,7 +648,7 @@ public abstract class Permission {
      * @deprecated As of VaultAPI 1.4 use {@link #getPlayerGroups(String, OfflinePlayer)} instead.
      */
     @Deprecated
-    abstract public String[] getPlayerGroups(String world, String player);
+    public abstract String[] getPlayerGroups(String world, String player);
 
     /**
      * @deprecated As of VaultAPI 1.4 use {@link #getPlayerGroups(String, OfflinePlayer)} instead.
@@ -689,7 +692,7 @@ public abstract class Permission {
      * @deprecated As of VaultAPI 1.4 use {@link #getPrimaryGroup(String, OfflinePlayer)} instead.
      */
     @Deprecated
-    abstract public String getPrimaryGroup(String world, String player);
+    public abstract String getPrimaryGroup(String world, String player);
 
     /**
      * @deprecated As of VaultAPI 1.4 use {@link #getPrimaryGroup(String, OfflinePlayer)} instead.
@@ -734,12 +737,12 @@ public abstract class Permission {
      *
      * @return an Array of String of all groups
      */
-    abstract public String[] getGroups();
+    public abstract String[] getGroups();
 
     /**
      * Returns true if the given implementation supports groups.
      *
      * @return true if the implementation supports groups
      */
-    abstract public boolean hasGroupSupport();
+    public abstract boolean hasGroupSupport();
 }

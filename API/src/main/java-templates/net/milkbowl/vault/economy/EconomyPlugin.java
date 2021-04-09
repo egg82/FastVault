@@ -14,6 +14,7 @@ public enum EconomyPlugin {
     DOSH("Dosh", "${dosh.version}", "Dosh"),
     ECON_XP("EconXP", "${econxp.version}", "EconXP"),
     ESSENTIALS("Essentials", "${essentials.version}", "Essentials"),
+    ESSENTIALS_X("EssentialsX", "${essentialsx.version}", "Essentials"),
     E_WALLET("eWallet", "${ewallet.version}", "eWallet"),
     GOLDEN_CHEST_ECONOMY("GoldenChestEconomy", "${goldenchesteconomy.version}", "GoldenChestEconomy"),
     GOLD_IS_MONEY("GoldIsMoney", "${goldismoney.version}", "GoldIsMoney"),
