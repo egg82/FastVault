@@ -27,7 +27,7 @@ public final class VaultProvider {
      */
     @NotNull
     public static VaultAPI get() {
-        VaultAPI i = instance; // local variable, for thread-safe returns
+        VaultAPI i = instance; // Thread-safe reference
         if (i == null) {
             throw new NotLoadedException();
         }
@@ -49,6 +49,7 @@ public final class VaultProvider {
     }
 
     private static final class NotLoadedException extends IllegalStateException {
+        @NotNull
         private static final String MESSAGE = "The Vault API isn't loaded yet!\n" +
                 "This could be because:\n" +
                 "  a) the Vault plugin is not installed or it failed to enable\n" +

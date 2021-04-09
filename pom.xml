@@ -28,13 +28,23 @@
         <plugin.version>1.7</plugin.version>
         <api.version>1.7</api.version>
 
-        <spigot.version>1.16.5-R0.1-SNAPSHOT</spigot.version>
+        <paper.version>1.16.5-R0.1-SNAPSHOT</paper.version>
         <bstats.version>2.2.1</bstats.version>
         <mockbukkit.version>0.31.0</mockbukkit.version>
 
+        <configurate.version>4.0.0</configurate.version>
+        <flexjson.version>3.3</flexjson.version>
         <caffeine.version>2.9.0</caffeine.version> <!-- v3 is J11 only -->
         <jetbrains.version>20.1.0</jetbrains.version>
         <junit.version>5.8.0-M1</junit.version>
+
+        <cloud.version>1.4.0</cloud.version>
+        <commodore.version>1.9</commodore.version>
+        <kyori-event.version>3.0.0</kyori-event.version>
+        <eventchain.api.version>2.1.0</eventchain.api.version>
+        <eventchain.version>3.1.2</eventchain.version>
+
+        <plan.version>5.1-R0.4</plan.version>
 
         <bpermissions.version>2.0.9a</bpermissions.version>
         <bpermissions2.version>2.10.5</bpermissions2.version>

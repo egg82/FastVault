@@ -27,7 +27,6 @@ import java.util.List;
  */
 @Deprecated
 public interface Economy {
-
     /**
      * Checks if economy method is enabled.
      *

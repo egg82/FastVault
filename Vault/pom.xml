@@ -126,6 +126,15 @@
 
     <repositories>
         <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>minecraft-repo</id>
+            <url>https://libraries.minecraft.net/</url>
+        </repository>
+
+        <repository>
             <id>spigot-public</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/public/</url>
         </repository>
@@ -166,9 +175,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>${spigot.version}</version>
+            <groupId>com.destroystokyo.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>${paper.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -176,6 +185,43 @@
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>${bstats.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ninja.egg82</groupId>
+            <artifactId>event-chain-api</artifactId>
+            <version>${eventchain.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>ninja.egg82</groupId>
+            <artifactId>event-chain-bukkit</artifactId>
+            <version>${eventchain.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>configurate-yaml</artifactId>
+            <version>${configurate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>event-api</artifactId>
+            <version>${kyori-event.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cloud.commandframework</groupId>
+            <artifactId>cloud-paper</artifactId>
+            <version>${cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>me.lucko</groupId>
+            <artifactId>commodore</artifactId>
+            <version>${commodore.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.flexjson</groupId>
+            <artifactId>flexjson</artifactId>
+            <version>${flexjson.version}</version>
         </dependency>
 
         <dependency>

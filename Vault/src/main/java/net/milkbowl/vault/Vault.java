@@ -16,12 +16,24 @@
 package net.milkbowl.vault;
 
 import com.nijikokun.register.payment.Methods;
+import net.kyori.event.SimpleEventBus;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.chat.plugins.*;
+import net.milkbowl.vault.commands.CommandHolder;
+import net.milkbowl.vault.config.ConfigurationFileUtil;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.plugins.*;
+import net.milkbowl.vault.event.VaultEvent;
+import net.milkbowl.vault.events.EventHolder;
+import net.milkbowl.vault.hooks.PluginHooks;
+import net.milkbowl.vault.hooks.UpdaterHook;
+import net.milkbowl.vault.logging.GELFLogger;
+import net.milkbowl.vault.logging.GELFLoggerUtil;
 import net.milkbowl.vault.permission.Permission;
 import net.milkbowl.vault.permission.plugins.*;
+import net.milkbowl.vault.utils.EventUtil;
+import net.milkbowl.vault.utils.ServerIDUtil;
+import ninja.egg82.events.BukkitEventSubscriber;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
@@ -35,55 +47,103 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.permissions.PermissionDefault;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.ServicePriority;
-import org.bukkit.plugin.ServicesManager;
+import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 public class Vault extends JavaPlugin {
+    @NotNull
+    private static final org.slf4j.Logger logger = new GELFLogger(LoggerFactory.getLogger(Vault.class));
 
-    private static final String VAULT_BUKKIT_URL = "https://dev.bukkit.org/projects/Vault";
-    private static Logger log;
+    @NotNull
+    private static final String VAULT_BUKKIT_URL = "https://dev.bukkit.org/projects/Vault"; // FastVault - reflections
+
+    @NotNull
+    private String currentVersionTitle = getDescription().getVersion().split("-")[0]; // FastVault - reflections
+    private double currentVersion = Double.valueOf(currentVersionTitle.replaceFirst("\\.", "")); // FastVault - reflections
+
+    @NotNull
+    private String newVersionTitle = ""; // FastVault - reflections
+    private double newVersion = 0; // FastVault - reflections
+
+    @NotNull
+    private static Logger log = Logger.getLogger("Vault"); // FastVault - reflections
+
     private Permission perms;
-    private String newVersionTitle = "";
-    private double newVersion = 0;
-    private double currentVersion = 0;
-    private String currentVersionTitle = "";
-    private ServicesManager sm;
-    private Vault plugin;
 
-    @Override
-    public void onDisable() {
-        // Remove all Service Registrations
-        getServer().getServicesManager().unregisterAll(this);
-        Bukkit.getScheduler().cancelTasks(this);
+    @NotNull
+    private ServicesManager sm = getServer().getServicesManager(); // FastVault - reflections
+
+    @NotNull
+    private Vault plugin = this; // FastVault - reflections
+
+    @NotNull
+    private final List<@NotNull CommandHolder> commandHolders = new ArrayList<>();
+
+    @NotNull
+    private final List<@NotNull EventHolder> eventHolders = new ArrayList<>();
+
+    @NotNull
+    private final List<@NotNull BukkitEventSubscriber<?>> events = new ArrayList<>();
+
+    @NotNull
+    private final List<@NotNull Integer> tasks = new ArrayList<>();
+
+    public Vault() {
+        super();
+        GELFLoggerUtil.setData(ServerIDUtil.getId(new File(getDataFolder(), "stats-id.txt")), getDescription().getVersion(), Bukkit.getVersion());
+    }
+
+    protected Vault(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        super(loader, description, dataFolder, file);
+        GELFLoggerUtil.setData(ServerIDUtil.getId(new File(getDataFolder(), "stats-id.txt")), getDescription().getVersion(), Bukkit.getVersion());
     }
 
     @Override
     public void onEnable() {
-        plugin = this;
-        log = this.getLogger();
-        currentVersionTitle = getDescription().getVersion().split("-")[0];
-        currentVersion = Double.valueOf(currentVersionTitle.replaceFirst("\\.", ""));
-        sm = getServer().getServicesManager();
-        // set defaults
-        getConfig().addDefault("update-check", true);
-        getConfig().options().copyDefaults(true);
-        saveConfig();
+        loadServices();
+        loadHooks();
+        loadCommands();
+        loadEvents();
+        loadTasks();
+
+        int numCommands = 0;
+        for (CommandHolder commandHolder : commandHolders) {
+            numCommands += commandHolder.numCommands();
+        }
+
+        int numEvents = events.size();
+        for (EventHolder eventHolder : eventHolders) {
+            numEvents += eventHolder.numEvents();
+        }
+
+        Bukkit.getConsoleSender().sendMessage("Vault enabled");
+
+        Bukkit.getConsoleSender().sendMessage("[Version " + getDescription().getVersion() + "]" +
+                                                      " [API Version</aqua> " + VaultProvider.get().getPluginMetadata().getApiVersion() + "]" +
+                                                      " [" + numCommands + " Commands]" +
+                                                      " [" + numEvents + " Events]" +
+                                                      " [" + tasks.size() + " Tasks]"
+        );
+
         // Load Vault Addons
         loadEconomy();
         loadPermission();
@@ -92,7 +152,7 @@ public class Vault extends JavaPlugin {
         getCommand("vault-info").setExecutor(this);
         getCommand("vault-convert").setExecutor(this);
         getServer().getPluginManager().registerEvents(new VaultListener(), this);
-        // Schedule to check the version every 30 minutes for an update. This is to update the most recent 
+        // Schedule to check the version every 30 minutes for an update. This is to update the most recent
         // version so if an admin reconnects they will be warned about newer versions.
         this.getServer().getScheduler().runTask(this, new Runnable() {
 
@@ -139,6 +199,118 @@ public class Vault extends JavaPlugin {
         findCustomData(metrics);
 
         log.info(String.format("Enabled Version %s", getDescription().getVersion()));
+    }
+
+    @Override
+    public void onDisable() {
+        for (CommandHolder commandHolder : commandHolders) {
+            commandHolder.cancel();
+        }
+        commandHolders.clear();
+
+        for (int task : tasks) {
+            Bukkit.getScheduler().cancelTask(task);
+        }
+        tasks.clear();
+
+        for (EventHolder eventHolder : eventHolders) {
+            eventHolder.cancel();
+        }
+        eventHolders.clear();
+        for (BukkitEventSubscriber<?> event : events) {
+            event.cancel();
+        }
+        events.clear();
+
+        unloadHooks();
+        unloadServices();
+
+        Bukkit.getConsoleSender().sendMessage("Vault disabled");
+
+        // Remove all Service Registrations
+        getServer().getServicesManager().unregisterAll(this);
+        Bukkit.getScheduler().cancelTasks(this);
+    }
+
+    private void loadServices() {
+        ConfigurationFileUtil.reloadConfig(plugin.getDataFolder(), Bukkit.getConsoleSender());
+
+        BukkitIPManager economyManager = new BukkitIPManager(plugin, sourceManager);
+        BukkitPlayerManager permissionManager = new BukkitPlayerManager(plugin);
+        BukkitPlayerManager chatManager = new BukkitPlayerManager(plugin);
+        AbstractPluginMetadata metadata = new BukkitPluginMetadata(plugin.getDescription().getVersion());
+        VaultAPI api = new VaultAPIImpl(metadata, economyManager, permissionManager, chatManager, new SimpleEventBus<>(VaultEvent.class));
+
+        APIRegistrationUtil.registerProvider(api);
+        EventUtil.post(new APILoadedEventImpl(api), api.getEventBus());
+    }
+
+    private void loadCommands() {
+        commandHolders.add(new VaultCommands(plugin));
+    }
+
+    private void loadEvents() {
+        eventHolders.add(new EarlyCheckEvents(plugin));
+    }
+
+    private void loadTasks() {
+        tasks.add(Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+            try {
+                VPNAPIProvider.getInstance().runUpdateTask().join();
+            } catch (CancellationException | CompletionException ex) {
+                logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
+            }
+        }, 1L, 20L).getTaskId());
+    }
+
+    private void loadHooks() {
+        PluginManager manager = plugin.getServer().getPluginManager();
+
+        console.sendMessage(MessageKey.GENERAL__ENABLE_HOOK, "{hook}", "BStats");
+        BStatsHook.create(plugin, 10438);
+
+        console.sendMessage(MessageKey.GENERAL__ENABLE_HOOK, "{hook}", "Updater");
+        UpdaterHook.create(plugin, );
+
+        Plugin plan;
+        if ((plan = manager.getPlugin("Plan")) != null) {
+            console.sendMessage(MessageKey.GENERAL__ENABLE_HOOK, "{hook}", "Plan");
+            PlayerAnalyticsHook.create(plugin, plan);
+        } else {
+            console.sendMessage(MessageKey.GENERAL__NO_HOOK, "{hook}", "Plan");
+        }
+
+        Plugin luckperms;
+        if ((luckperms = manager.getPlugin("LuckPerms")) != null) {
+            console.sendMessage(MessageKey.GENERAL__ENABLE_HOOK, "{hook}", "LuckPerms");
+            if (ConfigUtil.getDebugOrFalse()) {
+                console.sendMessage(MessageKey.GENERAL__ASYNC_ACTIONS);
+            }
+            LuckPermsHook.create(plugin, luckperms);
+        } else {
+            console.sendMessage(MessageKey.GENERAL__NO_HOOK, "{hook}", "LuckPerms");
+        }
+    }
+
+    private void unloadHooks() {
+        PluginHooks.getHooks().removeIf(h -> {
+            h.cancel();
+            return true;
+        });
+    }
+
+    public void unloadServices() {
+        VaultAPI api = VaultProvider.get();
+
+        try {
+            api.runUpdateTask().join();
+        } catch (CancellationException | CompletionException ex) {
+            logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
+        }
+
+        EventUtil.post(new APIDisableEventImpl(api), api.getEventBus());
+        api.getEventBus().unregisterAll();
+        APIRegistrationUtil.unregisterProvider();
     }
 
     /**

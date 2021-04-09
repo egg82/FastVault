@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
  * Chat plugins available to Vault.
  */
 public enum ChatPlugin {
-    B_PERMISSIONS("bPermissions", "${bpermissions.version}", "bPermissions"),
+    B_PERMISSIONS("bInfo", "${bpermissions.version}", "bPermissions"),
     B_PERMISSIONS2("bPermissions2", "${bpermissions.version}", "bPermissions"),
     DROX_PERMS("DroxPerms", "${droxperms.version}", "DroxPerms"),
     ESSENTIALS_X_CHAT("EssentialsChat", "${essentialsx.version}", "EssentialsChat"),
@@ -39,7 +39,7 @@ public enum ChatPlugin {
     /**
      * Gets Vault's internal name of the chat plugin.
      *
-     * @return the internal name of the chat plugin.
+     * @return the internal name of the chat plugin
      */
     @NotNull
     public String getName() { return name; }
@@ -47,7 +47,7 @@ public enum ChatPlugin {
     /**
      * Gets the chat plugin's version.
      *
-     * @return the version of the chat plugin.
+     * @return the version of the chat plugin
      */
     @NotNull
     public String getVersion() { return version; }

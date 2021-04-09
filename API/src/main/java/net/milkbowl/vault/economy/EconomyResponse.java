@@ -24,7 +24,6 @@ package net.milkbowl.vault.economy;
  */
 @Deprecated
 public class EconomyResponse {
-
     /**
      * Enum for types of Responses indicating the status of a method call.
      */

@@ -22,6 +22,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Logger;
 
@@ -32,8 +34,10 @@ import java.util.logging.Logger;
  */
 @Deprecated
 public abstract class Permission {
-
+    @NotNull
     protected static final Logger log = Logger.getLogger("Minecraft");
+
+    @Nullable
     protected Plugin plugin = null;
 
     /**

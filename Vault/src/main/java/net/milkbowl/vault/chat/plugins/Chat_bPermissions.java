@@ -17,7 +17,7 @@ package net.milkbowl.vault.chat.plugins;
 
 import de.bananaco.permissions.Permissions;
 import de.bananaco.permissions.info.InfoReader;
-import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.chat.ChatPlugin;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -26,19 +26,26 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Logger;
 
-public class Chat_bPermissions extends Chat {
-    private final String name = "bInfo";
-    private final Logger log;
-    private Plugin plugin = null;
-    InfoReader chat;
+public class Chat_bPermissions extends AbstractChat {
+    @NotNull
+    private final String name = super.pluginType.getName(); // FastVault - reflections
 
-    public Chat_bPermissions(Plugin plugin, Permission perms) {
-        super(perms);
-        this.plugin = plugin;
-        this.log = plugin.getLogger();
+    @NotNull
+    private final Logger log = super.logRef; // FastVault - reflections
+
+    @NotNull
+    private Plugin plugin = super.pluginRef; // FastVault - reflections
+
+    @Nullable
+    private InfoReader chat;
+
+    public Chat_bPermissions(@NotNull Plugin plugin, @NotNull Permission perms) {
+        super(ChatPlugin.B_PERMISSIONS, plugin, perms);
 
         Bukkit.getServer().getPluginManager().registerEvents(new PermissionServerListener(this), plugin);
 
@@ -47,7 +54,7 @@ public class Chat_bPermissions extends Chat {
             Plugin p = plugin.getServer().getPluginManager().getPlugin("bPermissions");
             if (p != null) {
                 chat = Permissions.getInfoReader();
-                log.info(String.format("[%s][Chat] %s hooked.", plugin.getDescription().getName(), "bPermissions"));
+                logger.info(String.format("[%s][Chat] %s hooked.", plugin.getDescription().getName(), "bPermissions"));
             }
         }
     }
@@ -65,7 +72,7 @@ public class Chat_bPermissions extends Chat {
                 Plugin chat = event.getPlugin();
                 if (chat.getDescription().getName().equals("bPermissions")) {
                     this.chat.chat = Permissions.getInfoReader();
-                    log.info(String.format("[%s][Chat] %s hooked.", plugin.getDescription().getName(), "bPermissions"));
+                    logger.info(String.format("[%s][Chat] %s hooked.", pluginRef.getDescription().getName(), "bPermissions"));
                 }
             }
         }
@@ -75,26 +82,17 @@ public class Chat_bPermissions extends Chat {
             if (this.chat.chat != null) {
                 if (event.getPlugin().getDescription().getName().equals("bPermissions")) {
                     this.chat.chat = null;
-                    log.info(String.format("[%s][Chat] %s un-hooked.", plugin.getDescription().getName(), "bPermissions"));
+                    logger.info(String.format("[%s][Chat] %s un-hooked.", pluginRef.getDescription().getName(), "bPermissions"));
                 }
             }
         }
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
+    public boolean isEnabled() { return chat != null; }
 
     @Override
-    public boolean isEnabled() {
-        return chat != null;
-    }
-
-    @Override
-    public String getPlayerPrefix(String world, String player) {
-        return chat.getPrefix(player, world);
-    }
+    public String getPlayerPrefix(@Nullable String world, @NotNull String player) { return chat.getPrefix(player, world); }
 
     @Override
     public void setPlayerPrefix(String world, String player, String prefix) {

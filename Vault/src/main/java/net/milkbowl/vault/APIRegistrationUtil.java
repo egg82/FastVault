@@ -1,12 +1,17 @@
 package net.milkbowl.vault;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Method;
 
 /**
  * Largely taken from LuckPerms @ https://github.com/lucko/LuckPerms/blob/f0e1a8f0923b6784457253740bd81122d2f4f8d9/common/src/main/java/me/lucko/luckperms/common/api/ApiRegistrationUtil.java
  */
 public class APIRegistrationUtil {
+    @NotNull
     private static final Method REGISTER;
+
+    @NotNull
     private static final Method UNREGISTER;
 
     static {
@@ -21,7 +26,7 @@ public class APIRegistrationUtil {
         }
     }
 
-    public static void registerProvider(VaultAPI vaultApi) {
+    public static void registerProvider(@NotNull VaultAPI vaultApi) {
         try {
             REGISTER.invoke(null, vaultApi);
         } catch (Exception e) {

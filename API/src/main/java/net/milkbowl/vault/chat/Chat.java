@@ -19,85 +19,98 @@ import net.milkbowl.vault.permission.Permission;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * The main Chat API - allows for Prefix/Suffix nodes along with generic Info nodes if the linked Chat system supports them
+ * The classic Vault chat API.
+ *
+ * <p>allows for prefix/suffix nodes along with generic info nodes if the linked chat system supports them.</p>
  *
  * @deprecated in FastVault in favor of {@link net.milkbowl.vault.VaultAPI}
  */
 @Deprecated
 public abstract class Chat {
-
+    @NotNull
     private Permission perms;
 
-    public Chat(Permission perms) {
-        this.perms = perms;
-    }
+    public Chat(@NotNull Permission perms) { this.perms = perms; }
 
     /**
-     * Gets name of permission method
+     * Gets Vault's internal name of the chat plugin.
      *
-     * @return Name of Permission Method
+     * @return the internal name of the chat plugin
      */
+    @NotNull
     public abstract String getName();
 
     /**
-     * Checks if permission method is enabled.
+     * Returns the enabled status of the chat plugin.
      *
-     * @return Success or Failure
+     * @return true if enabled, false if not
      */
     public abstract boolean isEnabled();
 
     /**
-     * @param world World name
-     * @param player Player name
+     * @param world the name of the {@link World} the player is in, or null for global
+     * @param player the player's name
      *
-     * @return Prefix
+     * Gets an {@link OfflinePlayer}'s prefix for the given {@link World}.
+     *
+     * <p>Returns the global prefix if {@code world} is null.</p>
+     *
+     * @return the player's prefix
      *
      * @deprecated As of VaultAPI 1.4 use {{@link #getPlayerPrefix(String, OfflinePlayer)} instead.
-     * <p>
-     * Get players prefix
      */
     @Deprecated
-    public abstract String getPlayerPrefix(String world, String player);
+    @NotNull
+    public abstract String getPlayerPrefix(@Nullable String world, @NotNull String player);
 
     /**
-     * Get a players prefix in the given world
-     * Use NULL for world if requesting a global prefix
+     * Gets an {@link OfflinePlayer}'s prefix for the given {@link World}.
      *
-     * @param world World name
-     * @param player OfflinePlayer
+     * <p>Returns the global prefix if {@code world} is null.</p>
      *
-     * @return Prefix
+     * @param world the name of the world the player is in, or null for global
+     * @param player the player
+     *
+     * @return the player's prefix
      */
-    public String getPlayerPrefix(String world, OfflinePlayer player) {
+    @NotNull
+    public String getPlayerPrefix(@Nullable String world, @NotNull OfflinePlayer player) {
         return getPlayerPrefix(world, player.getName());
     }
 
     /**
-     * @param world World Object
-     * @param player Player name
+     * Gets an {@link OfflinePlayer}'s prefix for the given {@link World}.
      *
-     * @return Prefix
+     * <p>Returns the global prefix if {@code world} is null.</p>
+     *
+     * @param world the world the player is in, or null for global
+     * @param player the player's name
+     *
+     * @return the player's prefix
      *
      * @deprecated As of VaultAPI 1.4 use {{@link #getPlayerPrefix(String, OfflinePlayer)} instead.
-     * <p>
-     * Get players prefix
      */
     @Deprecated
-    public String getPlayerPrefix(World world, String player) {
+    @NotNull
+    public String getPlayerPrefix(@NotNull World world, @NotNull String player) {
         return getPlayerPrefix(world.getName(), player);
     }
 
     /**
-     * Get players prefix from the world they are currently in.
-     * May or may not return the global prefix depending on implementation.
+     * Gets an {@link Player}'s prefix for the {@link World} they are currently in.
      *
-     * @param player Player Object
+     * <p>May or may not return the global prefix depending on implementation.</p>
      *
-     * @return Prefix
+     * @param player the player
+     *
+     * @return the player's prefix
      */
-    public String getPlayerPrefix(Player player) {
+    @NotNull
+    public String getPlayerPrefix(@NotNull Player player) {
         return getPlayerPrefix(player.getWorld().getName(), player);
     }
 

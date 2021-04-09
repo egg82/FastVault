@@ -42,7 +42,7 @@ public enum PermissionPlugin {
     /**
      * Gets Vault's internal name of the permission plugin.
      *
-     * @return the internal name of the permission plugin.
+     * @return the internal name of the permission plugin
      */
     @NotNull
     public String getName() { return name; }
@@ -50,7 +50,7 @@ public enum PermissionPlugin {
     /**
      * Gets the permission plugin's version.
      *
-     * @return the version of the permission plugin.
+     * @return the version of the permission plugin
      */
     @NotNull
     public String getVersion() { return version; }

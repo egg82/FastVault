@@ -47,7 +47,7 @@ public enum EconomyPlugin {
     /**
      * Gets Vault's internal name of the economy plugin.
      *
-     * @return the internal name of the economy plugin.
+     * @return the internal name of the economy plugin
      */
     @NotNull
     public String getName() { return name; }
@@ -55,7 +55,7 @@ public enum EconomyPlugin {
     /**
      * Gets the economy plugin's version.
      *
-     * @return the version of the economy plugin.
+     * @return the version of the economy plugin
      */
     @NotNull
     public String getVersion() { return version; }
