@@ -10,7 +10,23 @@ public enum EconomyPlugin {
     COMMANDS_EX("CommandsEX Economy", "${commandsex.version}", "CommandsEX"),
     CRAFTCONOMY3("Craftconomy3", "${craftconomy.version}", "Craftconomy3"),
     CURRENCY_CORE("CurrencyCore", "${currency.version}", "CurrencyCore"),
-    DIGI_COIN("DigiCoin", "${digicoin.version}", "DigiCoin");
+    DIGI_COIN("DigiCoin", "${digicoin.version}", "DigiCoin"),
+    DOSH("Dosh", "${dosh.version}", "Dosh"),
+    ECON_XP("EconXP", "${econxp.version}", "EconXP"),
+    ESSENTIALS("Essentials", "${essentials.version}", "Essentials"),
+    E_WALLET("eWallet", "${ewallet.version}", "eWallet"),
+    GOLDEN_CHEST_ECONOMY("GoldenChestEconomy", "${goldenchesteconomy.version}", "GoldenChestEconomy"),
+    GOLD_IS_MONEY("GoldIsMoney", "${goldismoney.version}", "GoldIsMoney"),
+    GRINGOTTS("Gringotts", "${gringotts.version}", "Gringotts"),
+    I_CONOMY("iConomy ", "${iconomy.version}", "iConomy"),
+    MC_MONEY("McMoney", "${mcmoney.version}", "McMoney"),
+    MI_CONOMY("MiConomy", "${miconomy.version}", "MiConomy"),
+    MINE_CONOMY("MineConomy", "${mineconomy.version}", "MineConomy"),
+    MINEFACONOMY("Minefaconomy", "${minefaconomy.version}", "Minefaconomy"),
+    MULTI_CURRENCY("MultiCurrency", "${multicurrency.version}", "MultiCurrency"),
+    SDF_ECONOMY("SDFEconomy", "${sdfeconomy.version}", "SDFEconomy"),
+    TA_ECON("TAEcon", "${taecon.version}", "TAEcon"),
+    XP_BANK("XPBank", "${xpbank.version}", "XPBank");
 
     @NotNull
     private final String name;

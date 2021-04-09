@@ -63,6 +63,24 @@
         <craftconomy3.version>3.2.2-SNAPSHOT</craftconomy3.version>
         <currency.version>0.61</currency.version>
         <digicoin.version>0.1</digicoin.version>
+        <dosh.version>1.0</dosh.version>
+        <econxp.version>0.4.1</econxp.version>
+        <essentials.version>2.9.2</essentials.version>
+        <ewallet.version>1.0</ewallet.version>
+        <goldenchesteconomy.version>1.0.0</goldenchesteconomy.version>
+        <goldismoney.version>2.0.0</goldismoney.version>
+        <gringotts.version>0.0.1-SNAPSHOT</gringotts.version>
+        <iconomy.version>6.0.9b</iconomy.version>
+        <mcmoney.version>1.2</mcmoney.version>
+        <miconomy.version>1.0</miconomy.version>
+        <mineconomy.version>1.6</mineconomy.version>
+        <minefaconomy.version>0.2</minefaconomy.version>
+        <multicurrency.version>0.1</multicurrency.version>
+        <sdfeconomy.version>0.2.2</sdfeconomy.version>
+        <taecon.version>0.1</taecon.version>
+        <xpbank.version>0.9</xpbank.version>
+
+        <register.version>1.5</register.version>
     </properties>
 
     <profiles>
