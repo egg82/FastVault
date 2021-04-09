@@ -5,7 +5,7 @@
     <property environment="env"/>
 
     <path id="classpath">
-        <fileset dir="lib" includes="**/*.jar"/>
+        <fileset dir="Vault/lib" includes="**/*.jar"/>
     </path>
 	
 	<target name="jdoc" depends="clean, javadoc" description="Main javadoc">
@@ -29,7 +29,7 @@
     <target name="compile" description="Compilation target">
     	<echo>Compiling</echo>
         <javac srcdir="." destdir="bin" debug="on" debuglevel="lines,vars,source" classpathref="classpath" includeantruntime="false" />
-    	<copy file="plugin.yml" tofile="bin/plugin.yml" />
+    	<copy file="Vault/src/main/resources/plugin.yml" tofile="bin/plugin.yml" />
     	<replace file="bin/plugin.yml" token="b000" value="b${env.BUILD_NUMBER}" />
     </target>
   
@@ -57,7 +57,7 @@
         <link href="http://jd.bukkit.org/apidocs/" />
 
 		<classpath>
-			<fileset dir="lib" includes="**/*.jar"/>
+			<fileset dir="Vault/lib" includes="**/*.jar"/>
 		</classpath>
 		<bottom>
 			<![CDATA[<b>MilkBowl, 2013</b>]]>
