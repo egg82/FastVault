@@ -269,26 +269,20 @@
         <dependency>
             <groupId>net.TheDgtl.iChat.iChat</groupId>
             <artifactId>iChat</artifactId>
-            <version>2.5.7</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/iChat.jar</systemPath>
+            <version>${ichat.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.D3GN.MiracleM4n.mChat.mChat</groupId>
             <artifactId>mChat</artifactId>
-            <version>1.8.5</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/mChat.jar</systemPath>
+            <version>${mchat.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>in.mDev</groupId>
             <artifactId>mChatSuite</artifactId>
-            <version>DEV-b275</version>
-            <optional>true</optional>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/mChatSuite.jar</systemPath>
+            <version>${mchatsuite.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

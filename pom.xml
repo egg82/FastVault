@@ -53,6 +53,10 @@
         <totalpermissions.version>0.3.1</totalpermissions.version>
         <xperms.version>1.1</xperms.version>
 
+        <ichat.version>2.5.7</ichat.version>
+        <mchat.version>1.8.5</mchat.version>
+        <mchatsuite.version>DEV-b275</mchatsuite.version>
+
         <commandsex.version>1.98</commandsex.version>
 	</properties>
 

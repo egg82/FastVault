@@ -24,9 +24,14 @@ softdepend:
   - 'Privileges'
   - 'rscPermissions'
   - 'SimplyPerms'
+  - 'Starburst'
   - 'TotalPermissions'
   - 'vPerms'
   - 'Xperms'
+# Chat
+  - 'iChat'
+  - 'mChat'
+  - 'mChatSuite'
 # Economy
   - 'CommandsEx'
 
