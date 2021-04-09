@@ -15,10 +15,10 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
+import co.uk.silvania.cities.digicoin.DigiCoin;
+import net.milkbowl.vault.economy.AbstractEconomy;
+import net.milkbowl.vault.economy.EconomyResponse;
+import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,10 +27,9 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import co.uk.silvania.cities.digicoin.DigiCoin;
-import net.milkbowl.vault.economy.AbstractEconomy;
-import net.milkbowl.vault.economy.EconomyResponse;
-import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_DigiCoin extends AbstractEconomy {
     private final Logger log;
@@ -38,7 +37,7 @@ public class Economy_DigiCoin extends AbstractEconomy {
     private Plugin plugin = null;
     private DigiCoin economy = null;
 
-    public Economy_DigiCoin(Plugin plugin){
+    public Economy_DigiCoin(Plugin plugin) {
         this.plugin = plugin;
         this.log = plugin.getLogger();
         Bukkit.getServer().getPluginManager().registerEvents(new EconomyServerListener(this), plugin);

@@ -15,11 +15,8 @@
  */
 package net.milkbowl.vault.permission.plugins;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import de.bananaco.bpermissions.api.*;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,11 +27,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import de.bananaco.bpermissions.api.ApiLayer;
-import de.bananaco.bpermissions.api.World;
-import de.bananaco.bpermissions.api.WorldManager;
-import de.bananaco.bpermissions.api.Calculable;
-import de.bananaco.bpermissions.api.CalculableType;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Permission_bPermissions2 extends Permission {
 
@@ -43,9 +37,9 @@ public class Permission_bPermissions2 extends Permission {
 
     public Permission_bPermissions2(Plugin plugin) {
         this.plugin = plugin;
-        
+
         Bukkit.getServer().getPluginManager().registerEvents(new PermissionServerListener(), plugin);
-        
+
         // Load Plugin in case it was loaded before
         if (!hooked) {
             Plugin p = plugin.getServer().getPluginManager().getPlugin("bPermissions");
@@ -57,12 +51,12 @@ public class Permission_bPermissions2 extends Permission {
     }
 
     public class PermissionServerListener implements Listener {
-        
+
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginEnable(PluginEnableEvent event) {
             if (!hooked) {
                 Plugin p = event.getPlugin();
-                if(p.getDescription().getName().equals("bPermissions")) {
+                if (p.getDescription().getName().equals("bPermissions")) {
                     hooked = true;
                     log.info(String.format("[%s][Permission] %s hooked.", plugin.getDescription().getName(), name));
                 }
@@ -89,32 +83,32 @@ public class Permission_bPermissions2 extends Permission {
     public boolean isEnabled() {
         return hooked;
     }
-    
+
     @Override
     public boolean has(Player player, String permission) {
         return playerHas(player.getWorld().getName(), player.getName(), permission);
     }
 
     @Override
-	public boolean has(String world, String player, String permission) {
-		return playerHas(world, player, permission);
-	}
+    public boolean has(String world, String player, String permission) {
+        return playerHas(world, player, permission);
+    }
 
-	@Override
-	public boolean has(CommandSender sender, String permission) {
-		if(sender instanceof Player) {
-			Player player = (Player) sender;
-			return has(player, permission);
-		}
-		return sender.hasPermission(permission);
-	}
+    @Override
+    public boolean has(CommandSender sender, String permission) {
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            return has(player, permission);
+        }
+        return sender.hasPermission(permission);
+    }
 
-	@Override
-	public boolean has(org.bukkit.World world, String player, String permission) {
-		return playerHas(world.getName(), player, permission);
-	}
+    @Override
+    public boolean has(org.bukkit.World world, String player, String permission) {
+        return playerHas(world.getName(), player, permission);
+    }
 
-	@Override
+    @Override
     public boolean playerHas(String world, String player, String permission) {
         return ApiLayer.hasPermission(world, CalculableType.USER, player, permission);
     }
@@ -122,7 +116,7 @@ public class Permission_bPermissions2 extends Permission {
     @Override
     public boolean playerAdd(String world, String player, String permission) {
         ApiLayer.addPermission(world, CalculableType.USER, player, de.bananaco.bpermissions.api.Permission.loadFromString(permission));
-    	return true;
+        return true;
     }
 
     @Override
@@ -140,8 +134,8 @@ public class Permission_bPermissions2 extends Permission {
 
     @Override
     public boolean groupAdd(String world, String group, String permission) {
-    	ApiLayer.addPermission(world, CalculableType.GROUP, group, de.bananaco.bpermissions.api.Permission.loadFromString(permission));
-    	return true;
+        ApiLayer.addPermission(world, CalculableType.GROUP, group, de.bananaco.bpermissions.api.Permission.loadFromString(permission));
+        return true;
     }
 
     @Override
@@ -182,11 +176,11 @@ public class Permission_bPermissions2 extends Permission {
     public String[] getGroups() {
         String[] groups = null;
         Set<String> gSet = new HashSet<String>();
-        for(World world : WorldManager.getInstance().getAllWorlds()) {
-        	Set<Calculable> gr = world.getAll(CalculableType.GROUP);
-        	for(Calculable c : gr) {
-        		gSet.add(c.getNameLowerCase());
-        	}
+        for (World world : WorldManager.getInstance().getAllWorlds()) {
+            Set<Calculable> gr = world.getAll(CalculableType.GROUP);
+            for (Calculable c : gr) {
+                gSet.add(c.getNameLowerCase());
+            }
         }
         // Convert to String
         groups = gSet.toArray(new String[gSet.size()]);

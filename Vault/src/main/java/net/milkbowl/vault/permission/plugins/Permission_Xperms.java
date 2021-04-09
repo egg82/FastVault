@@ -15,10 +15,8 @@
  */
 package net.milkbowl.vault.permission.plugins;
 
-import net.milkbowl.vault.permission.Permission;
-
 import com.github.sebc722.xperms.core.Main;
-
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,17 +34,25 @@ public class Permission_Xperms extends Permission {
         this.plugin = plugin;
         Bukkit.getServer().getPluginManager().registerEvents(new PermissionServerListener(this), plugin);
 
-        if(perms == null){
+        if (perms == null) {
             Plugin perms = plugin.getServer().getPluginManager().getPlugin("Xperms");
-            if(this.perms != null){
-                if(perms.isEnabled()){
-                    try{
-                        if(Double.valueOf(perms.getDescription().getVersion()) < 1.1){
-                            log.info(String.format("[%s] [Permission] %s Current version is not compatible with vault! Please Update!", plugin.getDescription().getName(), name));
+            if (this.perms != null) {
+                if (perms.isEnabled()) {
+                    try {
+                        if (Double.valueOf(perms.getDescription().getVersion()) < 1.1) {
+                            log.info(String.format(
+                                    "[%s] [Permission] %s Current version is not compatible with vault! Please Update!",
+                                    plugin.getDescription().getName(),
+                                    name
+                            ));
                         }
-                    } catch(NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         // version is first release, numbered 1.0.0
-                        log.info(String.format("[%s] [Permission] %s Current version is not compatibe with vault! Please Update!", plugin.getDescription().getName(), name));
+                        log.info(String.format(
+                                "[%s] [Permission] %s Current version is not compatibe with vault! Please Update!",
+                                plugin.getDescription().getName(),
+                                name
+                        ));
                     }
                 }
                 this.perms = (Main) perms;
@@ -58,7 +64,7 @@ public class Permission_Xperms extends Permission {
     public class PermissionServerListener implements Listener {
         Permission_Xperms permission = null;
 
-        public PermissionServerListener(Permission_Xperms permission){
+        public PermissionServerListener(Permission_Xperms permission) {
             this.permission = permission;
         }
 
@@ -66,14 +72,22 @@ public class Permission_Xperms extends Permission {
         public void onPluginEnable(PluginEnableEvent event) {
             if (permission.perms == null) {
                 Plugin perms = event.getPlugin();
-                if(perms.getDescription().getName().equals("Xperms")){
-                    try{
-                        if(Double.valueOf(perms.getDescription().getVersion()) < 1.1){
-                            log.info(String.format("[%s] [Permission] %s Current version is not compatible with vault! Please Update!", plugin.getDescription().getName(), name));
+                if (perms.getDescription().getName().equals("Xperms")) {
+                    try {
+                        if (Double.valueOf(perms.getDescription().getVersion()) < 1.1) {
+                            log.info(String.format(
+                                    "[%s] [Permission] %s Current version is not compatible with vault! Please Update!",
+                                    plugin.getDescription().getName(),
+                                    name
+                            ));
                         }
-                    } catch(NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         // version is first release, numbered 1.0.0
-                        log.info(String.format("[%s] [Permission] %s Current version is not compatibe with vault! Please Update!", plugin.getDescription().getName(), name));
+                        log.info(String.format(
+                                "[%s] [Permission] %s Current version is not compatibe with vault! Please Update!",
+                                plugin.getDescription().getName(),
+                                name
+                        ));
                     }
                     permission.perms = (Main) perms;
                     log.info(String.format("[%s][Permission] %s hooked.", plugin.getDescription().getName(), name));
@@ -83,8 +97,8 @@ public class Permission_Xperms extends Permission {
 
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginDisable(PluginDisableEvent event) {
-            if(permission.perms != null){
-                if(event.getPlugin().getName().equals("Xperms")){
+            if (permission.perms != null) {
+                if (event.getPlugin().getName().equals("Xperms")) {
                     permission.perms = null;
                     log.info(String.format("[%s][Permission] %s un-hooked.", plugin.getDescription().getName(), permission.name));
                 }
@@ -141,7 +155,7 @@ public class Permission_Xperms extends Permission {
     @Override
     public boolean playerInGroup(String world, String player, String group) {
         String groupForWorld = perms.getXplayer().getGroupForWorld(player, world);
-        if(groupForWorld.equals(group)){
+        if (groupForWorld.equals(group)) {
             return true;
         }
         return false;

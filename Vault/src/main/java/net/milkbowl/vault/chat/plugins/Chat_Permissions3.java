@@ -15,11 +15,10 @@
  */
 package net.milkbowl.vault.chat.plugins;
 
-import java.util.logging.Logger;
-
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,8 +27,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
+import java.util.logging.Logger;
 
 public class Chat_Permissions3 extends Chat {
 
@@ -69,7 +67,9 @@ public class Chat_Permissions3 extends Chat {
         public void onPluginEnable(PluginEnableEvent event) {
             if (chat == null) {
                 Plugin permChat = event.getPlugin();
-                if((permChat.getDescription().getName().equals("Permissions") || permChat.getDescription().getName().equals("vPerms")) && permChat.getDescription().getVersion().startsWith("3")) {
+                if ((permChat.getDescription().getName().equals("Permissions") || permChat.getDescription().getName().equals("vPerms")) && permChat.getDescription()
+                        .getVersion()
+                        .startsWith("3")) {
                     if (permChat.isEnabled()) {
                         chat = (Permissions) permChat;
                         perms = chat.getHandler();
@@ -104,6 +104,7 @@ public class Chat_Permissions3 extends Chat {
             return chat.isEnabled();
         }
     }
+
     @Override
     public int getPlayerInfoInteger(String world, String playerName, String node, int defaultValue) {
         Integer i = this.perms.getPermissionInteger(world, playerName, node);

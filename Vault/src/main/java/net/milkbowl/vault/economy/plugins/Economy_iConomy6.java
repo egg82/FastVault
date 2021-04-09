@@ -15,13 +15,13 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.List;
-import java.util.logging.Logger;
-
+import com.iCo6.Constants;
+import com.iCo6.iConomy;
+import com.iCo6.system.Accounts;
+import com.iCo6.system.Holdings;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,10 +30,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.iCo6.Constants;
-import com.iCo6.iConomy;
-import com.iCo6.system.Accounts;
-import com.iCo6.system.Holdings;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_iConomy6 extends AbstractEconomy {
     private final Logger log;
@@ -172,7 +170,7 @@ public class Economy_iConomy6 extends AbstractEconomy {
         boolean created = accounts.create(name);
         if (created) {
             return new EconomyResponse(0, 0, ResponseType.SUCCESS, "");
-        } else { 
+        } else {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "There was an error creating the account");
         }
 
@@ -256,10 +254,10 @@ public class Economy_iConomy6 extends AbstractEconomy {
         return accounts.create(playerName);
     }
 
-	@Override
-	public int fractionalDigits() {
-		return -1;
-	}
+    @Override
+    public int fractionalDigits() {
+        return -1;
+    }
 
     @Override
     public boolean hasAccount(String playerName, String worldName) {

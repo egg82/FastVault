@@ -31,8 +31,8 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
 /**
- * @version 1.0
  * @author Lord_Ralex
+ * @version 1.0
  */
 public class Chat_TotalPermissions extends Chat {
 

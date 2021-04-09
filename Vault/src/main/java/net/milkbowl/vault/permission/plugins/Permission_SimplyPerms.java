@@ -16,14 +16,9 @@
 
 package net.milkbowl.vault.permission.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import net.crystalyx.bukkit.simplyperms.SimplyAPI;
 import net.crystalyx.bukkit.simplyperms.SimplyPlugin;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,7 +27,11 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-public class Permission_SimplyPerms extends Permission{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class Permission_SimplyPerms extends Permission {
 
     private final String name = "SimplyPerms";
     private SimplyAPI perms;
@@ -207,7 +206,7 @@ public class Permission_SimplyPerms extends Permission{
     public String getPrimaryGroup(String world, String player) {
         if (!perms.isPlayerInDB(player)) {
             return null;
-        } else if (perms.getPlayerGroups(player) != null && !perms.getPlayerGroups(player).isEmpty() ) {
+        } else if (perms.getPlayerGroups(player) != null && !perms.getPlayerGroups(player).isEmpty()) {
             return perms.getPlayerGroups(player).get(0);
         }
         return null;

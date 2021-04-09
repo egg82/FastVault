@@ -15,14 +15,12 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.api.NoLoanPermittedException;
+import com.earth2me.essentials.api.UserDoesNotExistException;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,9 +29,9 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.api.NoLoanPermittedException;
-import com.earth2me.essentials.api.UserDoesNotExistException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_Essentials extends AbstractEconomy {
 
@@ -101,7 +99,7 @@ public class Economy_Essentials extends AbstractEconomy {
         if (amount < 0) {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "Cannot withdraw negative funds");
         }
-        
+
         double balance;
         EconomyResponse.ResponseType type;
         String errorMessage = null;
@@ -146,7 +144,7 @@ public class Economy_Essentials extends AbstractEconomy {
         if (tries <= 0) {
             return new EconomyResponse(amount, 0, ResponseType.FAILURE, "Failed to deposit amount.");
         }
-        
+
         double balance;
         EconomyResponse.ResponseType type;
         String errorMessage = null;
@@ -295,11 +293,11 @@ public class Economy_Essentials extends AbstractEconomy {
         return com.earth2me.essentials.api.Economy.playerExists(playerName);
     }
 
-	@Override
-	public int fractionalDigits() {
-		return -1;
-	}
-	
+    @Override
+    public int fractionalDigits() {
+        return -1;
+    }
+
     @Override
     public boolean hasAccount(String playerName, String worldName) {
         return hasAccount(playerName);

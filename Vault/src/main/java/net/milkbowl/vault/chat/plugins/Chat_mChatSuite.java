@@ -19,12 +19,8 @@ import com.miraclem4n.mchat.api.Reader;
 import com.miraclem4n.mchat.api.Writer;
 import com.miraclem4n.mchat.types.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-
-import java.util.logging.Logger;
-
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,6 +28,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
+
+import java.util.logging.Logger;
 
 public class Chat_mChatSuite extends Chat {
     private final Logger log;
@@ -185,7 +183,7 @@ public class Chat_mChatSuite extends Chat {
     }
 
     @Override
-    public double getGroupInfoDouble(String world, String group, String node,double defaultValue) {
+    public double getGroupInfoDouble(String world, String group, String node, double defaultValue) {
         String val = getGroupInfoValue(world, group, node);
         if (val == null || val.equals("")) {
             return defaultValue;
@@ -275,6 +273,7 @@ public class Chat_mChatSuite extends Chat {
             Writer.setInfoVar(group, InfoType.GROUP, node, value);
         }
     }
+
     private String getPlayerInfoValue(String world, String player, String node) {
         return Reader.getInfo(player, InfoType.USER, world, node);
     }

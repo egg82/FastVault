@@ -17,14 +17,8 @@ package net.milkbowl.vault.economy.plugins;
 
 import com.gmail.bleedobsidian.miconomy.Main;
 import com.gmail.bleedobsidian.miconomy.MiConomy;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
-
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -35,24 +29,28 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 public class Economy_MiConomy extends AbstractEconomy {
     private final Logger log;
-    
+
     private final String name = "MiConomy";
-    
+
     private Plugin plugin;
     private MiConomy economy;
     private Main miConomy;
-    
+
     public Economy_MiConomy(Plugin plugin) {
         this.plugin = plugin;
         this.log = plugin.getLogger();
         Bukkit.getServer().getPluginManager().registerEvents(new EconomyServerListener(this), plugin);
-        
+
         // Load Plugin in case it was loaded before
         if (miConomy == null) {
             Plugin miConomyPlugin = plugin.getServer().getPluginManager().getPlugin("MiConomy");
-            
+
             if (miConomy != null) {
                 miConomy = (Main) miConomyPlugin;
                 economy = miConomy.getInstance();
@@ -60,10 +58,10 @@ public class Economy_MiConomy extends AbstractEconomy {
             }
         }
     }
-    
+
     @Override
     public boolean isEnabled() {
-        if(miConomy == null) {
+        if (miConomy == null) {
             return false;
         } else {
             return miConomy.isEnabled();
@@ -103,7 +101,7 @@ public class Economy_MiConomy extends AbstractEconomy {
     @Override
     public boolean hasAccount(String playerName) {
         List<World> worlds = plugin.getServer().getWorlds();
-        
+
         return hasAccount(playerName, worlds.get(0).getName());
     }
 
@@ -111,29 +109,29 @@ public class Economy_MiConomy extends AbstractEconomy {
     public boolean hasAccount(String playerName, String worldName) {
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(playerName);
         World world = plugin.getServer().getWorld(worldName);
-        
+
         return economy.isAccountCreated(player, world);
     }
 
     @Override
     public double getBalance(String playerName) {
         List<World> worlds = plugin.getServer().getWorlds();
-        
+
         return getBalance(playerName, worlds.get(0).getName());
     }
 
     @Override
-    public double getBalance(String playerName, String worldName) {   
+    public double getBalance(String playerName, String worldName) {
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(playerName);
         World world = plugin.getServer().getWorld(worldName);
-        
+
         return economy.getAccountBalance(player, world);
     }
 
     @Override
     public boolean has(String playerName, double amount) {
         List<World> worlds = plugin.getServer().getWorlds();
-        
+
         return has(playerName, worlds.get(0).getName(), amount);
     }
 
@@ -141,10 +139,10 @@ public class Economy_MiConomy extends AbstractEconomy {
     public boolean has(String playerName, String worldName, double amount) {
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(playerName);
         World world = plugin.getServer().getWorld(worldName);
-        
+
         double playerBalance = economy.getAccountBalance(player, world);
-        
-        if(playerBalance >= amount) {
+
+        if (playerBalance >= amount) {
             return true;
         } else {
             return false;
@@ -154,7 +152,7 @@ public class Economy_MiConomy extends AbstractEconomy {
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         List<World> worlds = plugin.getServer().getWorlds();
-        
+
         return withdrawPlayer(playerName, worlds.get(0).getName(), amount);
     }
 
@@ -162,15 +160,15 @@ public class Economy_MiConomy extends AbstractEconomy {
     public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(playerName);
         World world = plugin.getServer().getWorld(worldName);
-        
+
         double balance = economy.getAccountBalance(player, world);
-        
-        if(getBalance(playerName, worldName) < amount) {
+
+        if (getBalance(playerName, worldName) < amount) {
             return new EconomyResponse(0, balance, EconomyResponse.ResponseType.FAILURE, "Insufficient funds");
         } else {
-            if(economy.removeAccountBalance(player, amount, world)) {
+            if (economy.removeAccountBalance(player, amount, world)) {
                 balance = economy.getAccountBalance(player, world);
-                
+
                 return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "");
             } else {
                 return new EconomyResponse(0, balance, EconomyResponse.ResponseType.FAILURE, "Failed to remove funds from account");
@@ -181,7 +179,7 @@ public class Economy_MiConomy extends AbstractEconomy {
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
         List<World> worlds = plugin.getServer().getWorlds();
-        
+
         return depositPlayer(playerName, worlds.get(0).getName(), amount);
     }
 
@@ -189,10 +187,10 @@ public class Economy_MiConomy extends AbstractEconomy {
     public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(playerName);
         World world = plugin.getServer().getWorld(worldName);
-        
+
         double balance = economy.getAccountBalance(player, world);
-        
-        if(economy.addAccountBalance(player, amount, world)) {
+
+        if (economy.addAccountBalance(player, amount, world)) {
             balance = economy.getAccountBalance(player, world);
 
             return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "");
@@ -204,11 +202,11 @@ public class Economy_MiConomy extends AbstractEconomy {
     @Override
     public EconomyResponse createBank(String name, String player) {
         OfflinePlayer owner = plugin.getServer().getOfflinePlayer(player);
-        
+
         ArrayList<OfflinePlayer> owners = new ArrayList<OfflinePlayer>();
         owners.add(owner);
-        
-        if(!economy.isBankCreated(name)) {
+
+        if (!economy.isBankCreated(name)) {
             economy.createBank(name, owners, new ArrayList<String>(), false);
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.SUCCESS, "");
         } else {
@@ -218,7 +216,7 @@ public class Economy_MiConomy extends AbstractEconomy {
 
     @Override
     public EconomyResponse deleteBank(String name) {
-        if(economy.isBankCreated(name)) {
+        if (economy.isBankCreated(name)) {
             economy.deleteBank(name);
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.SUCCESS, "");
         } else {
@@ -228,7 +226,7 @@ public class Economy_MiConomy extends AbstractEconomy {
 
     @Override
     public EconomyResponse bankBalance(String name) {
-        if(economy.isBankCreated(name)) {
+        if (economy.isBankCreated(name)) {
             double balance = economy.getBankBalance(name);
             return new EconomyResponse(0, balance, EconomyResponse.ResponseType.SUCCESS, "");
         } else {
@@ -238,26 +236,26 @@ public class Economy_MiConomy extends AbstractEconomy {
 
     @Override
     public EconomyResponse bankHas(String name, double amount) {
-        if(economy.isBankCreated(name)) {
+        if (economy.isBankCreated(name)) {
             double balance = economy.getBankBalance(name);
-            
-            if(balance >= amount) {
+
+            if (balance >= amount) {
                 return new EconomyResponse(0, balance, EconomyResponse.ResponseType.SUCCESS, "");
             } else {
                 return new EconomyResponse(0, balance, EconomyResponse.ResponseType.FAILURE, "The bank does not have enough money!");
             }
         } else {
-             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Bank doesn't exist");
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Bank doesn't exist");
         }
     }
 
     @Override
     public EconomyResponse bankWithdraw(String name, double amount) {
-        if(economy.isBankCreated(name)) {
+        if (economy.isBankCreated(name)) {
             economy.removeBankBalance(name, amount);
-            
+
             double balance = economy.getBankBalance(name);
-            
+
             return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "");
         } else {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Bank doesn't exist");
@@ -266,11 +264,11 @@ public class Economy_MiConomy extends AbstractEconomy {
 
     @Override
     public EconomyResponse bankDeposit(String name, double amount) {
-        if(economy.isBankCreated(name)) {
+        if (economy.isBankCreated(name)) {
             economy.addBankBalance(name, amount);
-            
+
             double balance = economy.getBankBalance(name);
-            
+
             return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "");
         } else {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Bank doesn't exist");
@@ -280,9 +278,9 @@ public class Economy_MiConomy extends AbstractEconomy {
     @Override
     public EconomyResponse isBankOwner(String name, String playerName) {
         OfflinePlayer owner = plugin.getServer().getOfflinePlayer(playerName);
-        
-        if(economy.isBankCreated(name)) {
-            if(economy.isPlayerBankOwner(name, owner)) {
+
+        if (economy.isBankCreated(name)) {
+            if (economy.isPlayerBankOwner(name, owner)) {
                 return new EconomyResponse(0, 0, EconomyResponse.ResponseType.SUCCESS, "");
             } else {
                 return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "The player is not a bank owner");
@@ -295,9 +293,9 @@ public class Economy_MiConomy extends AbstractEconomy {
     @Override
     public EconomyResponse isBankMember(String name, String playerName) {
         OfflinePlayer owner = plugin.getServer().getOfflinePlayer(playerName);
-        
-        if(economy.isBankCreated(name)) {
-            if(economy.isPlayerBankMember(name, owner)) {
+
+        if (economy.isBankCreated(name)) {
+            if (economy.isPlayerBankMember(name, owner)) {
                 return new EconomyResponse(0, 0, EconomyResponse.ResponseType.SUCCESS, "");
             } else {
                 return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "The player is not a bank member");
@@ -315,7 +313,7 @@ public class Economy_MiConomy extends AbstractEconomy {
     @Override
     public boolean createPlayerAccount(String playerName) {
         List<World> worlds = plugin.getServer().getWorlds();
-        
+
         return createPlayerAccount(playerName, worlds.get(0).getName());
     }
 
@@ -323,16 +321,16 @@ public class Economy_MiConomy extends AbstractEconomy {
     public boolean createPlayerAccount(String playerName, String worldName) {
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(playerName);
         World world = plugin.getServer().getWorld(worldName);
-        
-        if(!economy.isAccountCreated(player, world)) {
+
+        if (!economy.isAccountCreated(player, world)) {
             economy.createAccount(player, 0, world);
-            
+
             return true;
         } else {
             return false;
         }
     }
-    
+
     public class EconomyServerListener implements Listener {
         Economy_MiConomy economy = null;
 
@@ -347,9 +345,9 @@ public class Economy_MiConomy extends AbstractEconomy {
 
                 if (miConomyPlugin.getDescription().getName().equals("MiConomy")) {
                     economy.miConomy = (Main) miConomyPlugin;
-                    
+
                     economy.economy = miConomy.getInstance();
-                    
+
                     log.info(String.format("[Economy] %s hooked.", name));
                 }
             }
@@ -361,7 +359,7 @@ public class Economy_MiConomy extends AbstractEconomy {
                 if (event.getPlugin().getDescription().getName().equals("MiConomy")) {
                     economy.miConomy = null;
                     economy.economy = null;
-                    
+
                     log.info(String.format("[Economy] %s unhooked.", economy.name));
                 }
             }

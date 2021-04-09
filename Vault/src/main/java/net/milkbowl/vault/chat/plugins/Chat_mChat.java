@@ -15,12 +15,9 @@
 */
 package net.milkbowl.vault.chat.plugins;
 
-import java.util.logging.Logger;
-
 import net.D3GN.MiracleM4n.mChat.mChatAPI;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,6 +26,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
+
+import java.util.logging.Logger;
 
 public class Chat_mChat extends Chat {
     private final Logger log;
@@ -70,7 +69,7 @@ public class Chat_mChat extends Chat {
                 }
             }
         }
-        
+
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginDisable(PluginDisableEvent event) {
             if (this.chat.mChat != null) {
@@ -95,7 +94,7 @@ public class Chat_mChat extends Chat {
     @Override
     public String getPlayerPrefix(String world, String player) {
         Player p = Bukkit.getServer().getPlayer(player);
-        if (p ==null) {
+        if (p == null) {
             throw new UnsupportedOperationException("mChat does not support offline player prefixes");
         }
         return mChat.getPrefix(p);
@@ -109,7 +108,7 @@ public class Chat_mChat extends Chat {
     @Override
     public String getPlayerSuffix(String world, String player) {
         Player p = Bukkit.getServer().getPlayer(player);
-        if (p ==null) {
+        if (p == null) {
             throw new UnsupportedOperationException("mChat does not support offline player prefixes");
         }
         return mChat.getSuffix(p);
@@ -189,7 +188,7 @@ public class Chat_mChat extends Chat {
     }
 
     @Override
-    public double getGroupInfoDouble(String world, String group, String node,double defaultValue) {
+    public double getGroupInfoDouble(String world, String group, String node, double defaultValue) {
         throw new UnsupportedOperationException("mChat does not support group info nodes");
     }
 
@@ -227,7 +226,7 @@ public class Chat_mChat extends Chat {
     @Override
     public String getPlayerInfoString(String world, String player, String node, String defaultValue) {
         Player p = Bukkit.getServer().getPlayer(player);
-        if (p ==null) {
+        if (p == null) {
             throw new UnsupportedOperationException("mChat does not support offline player prefixes");
         }
         String s = mChat.getInfo(p, node);

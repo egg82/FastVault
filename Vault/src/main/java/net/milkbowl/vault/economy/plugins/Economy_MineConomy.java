@@ -15,10 +15,6 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import me.mjolnir.mineconomy.MineConomy;
 import me.mjolnir.mineconomy.exceptions.AccountNameConflictException;
 import me.mjolnir.mineconomy.exceptions.NoAccountException;
@@ -27,7 +23,6 @@ import me.mjolnir.mineconomy.internal.util.MCFormat;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,6 +30,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_MineConomy extends AbstractEconomy {
     private final Logger log;
@@ -108,12 +107,9 @@ public class Economy_MineConomy extends AbstractEconomy {
     }
 
     public double getBalance(String playerName) {
-        try
-        {
+        try {
             return MCCom.getExternalBalance(playerName);
-        }
-        catch (NoAccountException e)
-        {
+        } catch (NoAccountException e) {
             MCCom.create(playerName);
             return MCCom.getExternalBalance(playerName);
         }
@@ -123,14 +119,14 @@ public class Economy_MineConomy extends AbstractEconomy {
     public boolean has(String playerName, double amount) {
         try {
             return MCCom.canExternalAfford(playerName, amount);
-        } catch(NoAccountException e) {
+        } catch (NoAccountException e) {
             MCCom.create(playerName);
             return MCCom.canExternalAfford(playerName, amount);
         }
     }
 
     @Override
-    public EconomyResponse withdrawPlayer(String playerName, double amount) {      
+    public EconomyResponse withdrawPlayer(String playerName, double amount) {
         double balance;
         try {
             balance = MCCom.getExternalBalance(playerName);
@@ -139,11 +135,11 @@ public class Economy_MineConomy extends AbstractEconomy {
             balance = MCCom.getExternalBalance(playerName);
         }
 
-        if(amount < 0.0D) {
+        if (amount < 0.0D) {
             return new EconomyResponse(0.0D, balance, ResponseType.FAILURE, "Cannot withdraw negative funds");
         }
 
-        if(balance >= amount) {
+        if (balance >= amount) {
             double finalBalance = balance - amount;
             MCCom.setExternalBalance(playerName, finalBalance);
             return new EconomyResponse(amount, finalBalance, ResponseType.SUCCESS, null);
@@ -161,7 +157,7 @@ public class Economy_MineConomy extends AbstractEconomy {
             MCCom.create(playerName);
             balance = MCCom.getExternalBalance(playerName);
         }
-        if(amount < 0.0D) {
+        if (amount < 0.0D) {
             return new EconomyResponse(0.0D, 0.0, ResponseType.FAILURE, "Cannot deposit negative funds");
         }
 
@@ -230,7 +226,7 @@ public class Economy_MineConomy extends AbstractEconomy {
         try {
             MCCom.create(playerName);
             return true;
-        } catch(AccountNameConflictException e) {
+        } catch (AccountNameConflictException e) {
             return false;
         }
     }

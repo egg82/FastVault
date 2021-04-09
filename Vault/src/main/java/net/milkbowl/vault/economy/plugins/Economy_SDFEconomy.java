@@ -15,28 +15,26 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.List;
-import java.util.logging.Logger;
-
-import org.bukkit.plugin.Plugin;
+import com.github.omwah.SDFEconomy.SDFEconomy;
+import com.github.omwah.SDFEconomy.SDFEconomyAPI;
+import net.milkbowl.vault.economy.AbstractEconomy;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.plugin.Plugin;
 
-import com.github.omwah.SDFEconomy.SDFEconomy;
-import com.github.omwah.SDFEconomy.SDFEconomyAPI;
-
-import net.milkbowl.vault.economy.AbstractEconomy;
-import net.milkbowl.vault.economy.EconomyResponse;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_SDFEconomy extends AbstractEconomy {
     private final Logger log;
     private final String name = "SDFEconomy";
     private Plugin plugin = null;
     private SDFEconomyAPI api = null;
-    
+
     public Economy_SDFEconomy(Plugin plugin) {
         this.plugin = plugin;
         this.log = plugin.getLogger();
@@ -49,16 +47,16 @@ public class Economy_SDFEconomy extends AbstractEconomy {
 
     public void load_api() {
         SDFEconomy pluginSDF = (SDFEconomy) plugin.getServer().getPluginManager().getPlugin("SDFEconomy");
-        if(!isEnabled() && pluginSDF != null) {
-            api = pluginSDF.getAPI(); 
+        if (!isEnabled() && pluginSDF != null) {
+            api = pluginSDF.getAPI();
             log.info(String.format("[Economy] %s hooked.", name));
         }
     }
 
     public void unload_api() {
         SDFEconomy pluginSDF = (SDFEconomy) plugin.getServer().getPluginManager().getPlugin("SDFEconomy");
-        if(isEnabled() && pluginSDF != null) {
-            api = null; 
+        if (isEnabled() && pluginSDF != null) {
+            api = null;
             log.info(String.format("[Economy] %s unhooked.", name));
         }
     }
@@ -85,7 +83,7 @@ public class Economy_SDFEconomy extends AbstractEconomy {
         }
     }
 
- 
+
     @Override
     public boolean isEnabled() {
         return api != null;
@@ -93,7 +91,7 @@ public class Economy_SDFEconomy extends AbstractEconomy {
 
     @Override
     public String getName() {
-        return "SDFEconomy"; 
+        return "SDFEconomy";
     }
 
     @Override

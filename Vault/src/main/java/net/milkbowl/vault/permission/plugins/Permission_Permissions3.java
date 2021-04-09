@@ -15,11 +15,10 @@
  */
 package net.milkbowl.vault.permission.plugins;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import com.nijiko.permissions.Group;
+import com.nijiko.permissions.ModularControl;
+import com.nijikokun.bukkit.Permissions.Permissions;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -31,9 +30,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.nijiko.permissions.Group;
-import com.nijiko.permissions.ModularControl;
-import com.nijikokun.bukkit.Permissions.Permissions;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Permission_Permissions3 extends Permission {
 
@@ -83,7 +81,9 @@ public class Permission_Permissions3 extends Permission {
         public void onPluginEnable(PluginEnableEvent event) {
             if (permission == null) {
                 Plugin permi = event.getPlugin();
-                if((permi.getDescription().getName().equals("Permissions") || permi.getDescription().getName().equals("vPerms")) && permi.getDescription().getVersion().startsWith("3")) {
+                if ((permi.getDescription().getName().equals("Permissions") || permi.getDescription().getName().equals("vPerms")) && permi.getDescription()
+                        .getVersion()
+                        .startsWith("3")) {
                     if (permi.isEnabled()) {
                         permission = (Permissions) permi;
                         perms = (ModularControl) permission.getHandler();
@@ -218,8 +218,9 @@ public class Permission_Permissions3 extends Permission {
     public boolean playerHas(String worldName, String playerName, String permission) {
         Player p = plugin.getServer().getPlayer(playerName);
         if (p != null) {
-            if (p.hasPermission(permission))
+            if (p.hasPermission(permission)) {
                 return true;
+            }
         }
         return this.perms.has(worldName, playerName, permission);
     }
@@ -241,7 +242,7 @@ public class Permission_Permissions3 extends Permission {
         try {
             perms.safeGetUser(worldName, player).addTransientPermission(permission);
             return true;
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }

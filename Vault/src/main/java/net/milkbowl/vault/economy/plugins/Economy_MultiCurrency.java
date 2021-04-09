@@ -15,16 +15,11 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import me.ashtheking.currency.Currency;
 import me.ashtheking.currency.CurrencyList;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,6 +27,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_MultiCurrency extends AbstractEconomy {
     private final Logger log;
@@ -178,7 +177,7 @@ public class Economy_MultiCurrency extends AbstractEconomy {
     }
 
     @Override
-    public String format(double amount) {   
+    public String format(double amount) {
         return String.format("%.2f %s", amount, "currency");
     }
 
@@ -257,10 +256,10 @@ public class Economy_MultiCurrency extends AbstractEconomy {
         return false;
     }
 
-	@Override
-	public int fractionalDigits() {
-		return -1;
-	}
+    @Override
+    public int fractionalDigits() {
+        return -1;
+    }
 
     @Override
     public boolean hasAccount(String playerName, String worldName) {

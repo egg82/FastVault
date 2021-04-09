@@ -63,7 +63,7 @@
         <craftconomy3.version>3.2.2-SNAPSHOT</craftconomy3.version>
         <currency.version>0.61</currency.version>
         <digicoin.version>0.1</digicoin.version>
-	</properties>
+    </properties>
 
     <profiles>
         <profile>

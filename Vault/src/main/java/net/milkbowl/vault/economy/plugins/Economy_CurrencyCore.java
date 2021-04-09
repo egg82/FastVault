@@ -17,14 +17,9 @@ package net.milkbowl.vault.economy.plugins;
 
 import is.currency.Currency;
 import is.currency.syst.AccountContext;
-
-import java.util.List;
-import java.util.logging.Logger;
-
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,6 +27,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
+
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_CurrencyCore extends AbstractEconomy {
 
@@ -46,11 +44,11 @@ public class Economy_CurrencyCore extends AbstractEconomy {
         Bukkit.getServer().getPluginManager().registerEvents(new EconomyServerListener(this), plugin);
 
         // Load Plugin in case it was loaded before
-        if(currency == null) {
+        if (currency == null) {
             Plugin currencyPlugin = plugin.getServer().getPluginManager().getPlugin("CurrencyCore");
-            if(currencyPlugin != null && currencyPlugin.getClass().getName().equals("is.currency.Currency")) {
+            if (currencyPlugin != null && currencyPlugin.getClass().getName().equals("is.currency.Currency")) {
                 this.currency = (Currency) currencyPlugin;
-                log.info(String.format("[Economy] %s hooked.", name));  
+                log.info(String.format("[Economy] %s hooked.", name));
             }
         }
     }
@@ -60,17 +58,17 @@ public class Economy_CurrencyCore extends AbstractEconomy {
         private Economy_CurrencyCore economy = null;
 
         public EconomyServerListener(Economy_CurrencyCore economy) {
-            this.economy = economy;     
+            this.economy = economy;
         }
 
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginEnable(PluginEnableEvent event) {
-            if(this.economy.currency == null) {
+            if (this.economy.currency == null) {
                 Plugin currencyPlugin = event.getPlugin();
-                
-                if(currencyPlugin.getDescription().getName().equals("CurrencyCore") && currencyPlugin.getClass().getName().equals("is.currency.Currency")) {
+
+                if (currencyPlugin.getDescription().getName().equals("CurrencyCore") && currencyPlugin.getClass().getName().equals("is.currency.Currency")) {
                     this.economy.currency = (Currency) currencyPlugin;
-                    log.info(String.format("[Economy] %s hooked.", this.economy.getName()));  
+                    log.info(String.format("[Economy] %s hooked.", this.economy.getName()));
                 }
             }
         }
@@ -115,7 +113,7 @@ public class Economy_CurrencyCore extends AbstractEconomy {
     public double getBalance(String playerName) {
         AccountContext account = this.currency.getAccountManager().getAccount(playerName);
         if (account == null) {
-            return 0.0;     
+            return 0.0;
         }
 
         return account.getBalance();
@@ -141,7 +139,7 @@ public class Economy_CurrencyCore extends AbstractEconomy {
         if (account == null) {
             return new EconomyResponse(0.0, 0.0, ResponseType.FAILURE, "That account does not exist");
         } else if (!account.hasBalance(amount)) {
-            return new EconomyResponse(0.0, account.getBalance(), ResponseType.FAILURE, "Insufficient funds");  
+            return new EconomyResponse(0.0, account.getBalance(), ResponseType.FAILURE, "Insufficient funds");
         } else {
             account.subtractBalance(amount);
             return new EconomyResponse(amount, account.getBalance(), ResponseType.SUCCESS, "");
@@ -157,7 +155,7 @@ public class Economy_CurrencyCore extends AbstractEconomy {
         AccountContext account = this.currency.getAccountManager().getAccount(playerName);
         if (account == null) {
             return new EconomyResponse(0.0, 0.0, ResponseType.FAILURE, "That account does not exist");
-        }   
+        }
         account.addBalance(amount);
         return new EconomyResponse(amount, account.getBalance(), ResponseType.SUCCESS, "");
     }
@@ -268,10 +266,10 @@ public class Economy_CurrencyCore extends AbstractEconomy {
         return true;
     }
 
-	@Override
-	public int fractionalDigits() {
-		return -1;
-	}
+    @Override
+    public int fractionalDigits() {
+        return -1;
+    }
 
     @Override
     public boolean hasAccount(String playerName, String worldName) {

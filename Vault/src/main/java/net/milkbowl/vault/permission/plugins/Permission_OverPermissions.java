@@ -12,10 +12,12 @@
 */
 package net.milkbowl.vault.permission.plugins;
 
-import java.util.ArrayList;
-
+import com.overmc.overpermissions.api.GroupManager;
+import com.overmc.overpermissions.api.PermissionGroup;
+import com.overmc.overpermissions.api.PermissionUser;
+import com.overmc.overpermissions.api.UserManager;
+import com.overmc.overpermissions.internal.OverPermissions;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,11 +26,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.overmc.overpermissions.api.GroupManager;
-import com.overmc.overpermissions.api.PermissionGroup;
-import com.overmc.overpermissions.api.PermissionUser;
-import com.overmc.overpermissions.api.UserManager;
-import com.overmc.overpermissions.internal.OverPermissions;
+import java.util.ArrayList;
 
 public class Permission_OverPermissions extends Permission {
     private OverPermissions overPerms;
@@ -45,18 +43,18 @@ public class Permission_OverPermissions extends Permission {
                 overPerms = ((OverPermissions) perms);
                 userManager = overPerms.getUserManager();
                 groupManager = overPerms.getGroupManager();
-                log.info(String.format("[%s][Permission] %s hooked.", new Object[] {plugin.getDescription().getName(), "OverPermissions"}));
+                log.info(String.format("[%s][Permission] %s hooked.", new Object[] { plugin.getDescription().getName(), "OverPermissions" }));
             }
         }
     }
 
     @Override
-    public String getName( ) {
+    public String getName() {
         return "OverPermissions";
     }
 
     @Override
-    public boolean isEnabled( ) {
+    public boolean isEnabled() {
         return (overPerms != null) && (overPerms.isEnabled());
     }
 
@@ -172,7 +170,7 @@ public class Permission_OverPermissions extends Permission {
     }
 
     @Override
-    public String[] getGroups( ) {
+    public String[] getGroups() {
         ArrayList<String> groupNames = new ArrayList<String>();
         for (PermissionGroup s : groupManager.getGroups()) {
             groupNames.add(s.getName());
@@ -181,12 +179,12 @@ public class Permission_OverPermissions extends Permission {
     }
 
     @Override
-    public boolean hasSuperPermsCompat( ) {
+    public boolean hasSuperPermsCompat() {
         return true;
     }
 
     @Override
-    public boolean hasGroupSupport( ) {
+    public boolean hasGroupSupport() {
         return true;
     }
 
@@ -205,19 +203,27 @@ public class Permission_OverPermissions extends Permission {
                 if (perms != null) {
                     permission.overPerms = ((OverPermissions) perms);
                     Permission_OverPermissions.log.info(String
-                            .format("[%s][Permission] %s hooked.", new Object[] {Permission_OverPermissions.this.plugin.getDescription().getName(), "OverPermissions"}));
+                                                                .format(
+                                                                        "[%s][Permission] %s hooked.",
+                                                                        new Object[] {
+                                                                                Permission_OverPermissions.this.plugin.getDescription().getName(),
+                                                                                "OverPermissions"
+                                                                        }
+                                                                ));
                 }
             }
         }
 
         @EventHandler(priority = EventPriority.MONITOR)
-        public void onPluginDisable(PluginDisableEvent event)
-        {
+        public void onPluginDisable(PluginDisableEvent event) {
             if ((permission.overPerms != null) &&
                     (event.getPlugin().getDescription().getName().equals("OverPermissions"))) {
                 permission.overPerms = null;
                 Permission_OverPermissions.log.info(String
-                        .format("[%s][Permission] %s un-hooked.", new Object[] {Permission_OverPermissions.this.plugin.getDescription().getName(), "OverPermissions"}));
+                                                            .format(
+                                                                    "[%s][Permission] %s un-hooked.",
+                                                                    new Object[] { Permission_OverPermissions.this.plugin.getDescription().getName(), "OverPermissions" }
+                                                            ));
             }
         }
     }

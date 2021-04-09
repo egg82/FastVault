@@ -15,8 +15,6 @@
  */
 package net.milkbowl.vault.permission;
 
-import java.util.logging.Logger;
-
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -25,9 +23,10 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Logger;
+
 /**
  * The main Permission API - allows for group and player based permission tests
- *
  */
 public abstract class Permission {
 
@@ -36,18 +35,21 @@ public abstract class Permission {
 
     /**
      * Gets name of permission method
+     *
      * @return Name of Permission Method
      */
     abstract public String getName();
 
     /**
      * Checks if permission method is enabled.
+     *
      * @return Success or Failure
      */
     abstract public boolean isEnabled();
 
     /**
      * Returns if the permission system is or attempts to be compatible with super-perms.
+     *
      * @return True if this permission implementation works with super-perms
      */
     abstract public boolean hasSuperPermsCompat();
@@ -78,10 +80,12 @@ public abstract class Permission {
      * Checks if a CommandSender has a permission node.
      * This will return the result of bukkits, generic .hasPermission() method and is identical in all cases.
      * This method will explicitly fail if the registered permission system does not register permissions in bukkit.
-     *
+     * <p>
      * For easy checking of a commandsender
+     *
      * @param sender to check permissions on
      * @param permission to check for
+     *
      * @return true if the sender has the permission
      */
     public boolean has(CommandSender sender, String permission) {
@@ -90,8 +94,10 @@ public abstract class Permission {
 
     /**
      * Checks if player has a permission node. (Short for playerHas(...)
+     *
      * @param player Player Object
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean has(Player player, String permission) {
@@ -123,6 +129,7 @@ public abstract class Permission {
      * @param world String world name
      * @param player to check
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerHas(String world, OfflinePlayer player, String permission) {
@@ -139,6 +146,7 @@ public abstract class Permission {
      *
      * @param player Player Object
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerHas(Player player, String permission) {
@@ -146,15 +154,16 @@ public abstract class Permission {
     }
 
     /**
+     * @param world World name
+     * @param player Player name
+     * @param permission Permission node
+     *
+     * @return Success or Failure
+     *
      * @deprecated As of VaultAPI 1.4 use {@link #playerAdd(String, OfflinePlayer, String)} instead.
      * Add permission to a player.
      * Supports NULL value for World if the permission system registered supports global permissions.
      * But May return odd values if the servers registered permission system does not have a global permission store.
-     *
-     * @param world World name
-     * @param player Player name
-     * @param permission Permission node
-     * @return Success or Failure
      */
     @Deprecated
     abstract public boolean playerAdd(String world, String player, String permission);
@@ -178,6 +187,7 @@ public abstract class Permission {
      * @param world String world name
      * @param player to add to
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerAdd(String world, OfflinePlayer player, String permission) {
@@ -194,6 +204,7 @@ public abstract class Permission {
      *
      * @param player Player Object
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerAdd(Player player, String permission) {
@@ -202,11 +213,12 @@ public abstract class Permission {
 
     /**
      * Add transient permission to a player.
-     * This implementation can be used by any subclass which implements a "pure" superperms plugin, i.e. 
+     * This implementation can be used by any subclass which implements a "pure" superperms plugin, i.e.
      * one that only needs the built-in Bukkit API to add transient permissions to a player.
      *
      * @param player to add to
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerAddTransient(OfflinePlayer player, String permission) throws UnsupportedOperationException {
@@ -222,6 +234,7 @@ public abstract class Permission {
      *
      * @param player Player Object
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerAddTransient(Player player, String permission) {
@@ -245,6 +258,7 @@ public abstract class Permission {
      * @param worldName to check on
      * @param player to add to
      * @param permission to test
+     *
      * @return Success or Failure
      */
     public boolean playerAddTransient(String worldName, OfflinePlayer player, String permission) {
@@ -258,6 +272,7 @@ public abstract class Permission {
      * @param worldName to check on
      * @param player to check
      * @param permission to check for
+     *
      * @return Success or Failure
      */
     public boolean playerAddTransient(String worldName, Player player, String permission) {
@@ -271,6 +286,7 @@ public abstract class Permission {
      * @param worldName to remove for
      * @param player to remove for
      * @param permission to remove
+     *
      * @return Success or Failure
      */
     public boolean playerRemoveTransient(String worldName, OfflinePlayer player, String permission) {
@@ -284,6 +300,7 @@ public abstract class Permission {
      * @param worldName to check on
      * @param player to check
      * @param permission to check for
+     *
      * @return Success or Failure
      */
     public boolean playerRemoveTransient(String worldName, Player player, String permission) {
@@ -304,6 +321,7 @@ public abstract class Permission {
      * @param world World name
      * @param player OfflinePlayer
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerRemove(String world, OfflinePlayer player, String permission) {
@@ -321,6 +339,7 @@ public abstract class Permission {
      * @param world World name
      * @param player Player name
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     @Deprecated
@@ -337,6 +356,7 @@ public abstract class Permission {
      *
      * @param player Player Object
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerRemove(Player player, String permission) {
@@ -346,12 +366,13 @@ public abstract class Permission {
 
     /**
      * Remove transient permission from a player.
-     * This implementation can be used by any subclass which implements a "pure" superperms plugin, i.e. 
+     * This implementation can be used by any subclass which implements a "pure" superperms plugin, i.e.
      * one that only needs the built-in Bukkit API to remove transient permissions from a player.  Any subclass
      * implementing a plugin which provides its own API for this needs to override this method.
      *
      * @param player OfflinePlayer
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerRemoveTransient(OfflinePlayer player, String permission) {
@@ -367,6 +388,7 @@ public abstract class Permission {
      *
      * @param player Player Object
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean playerRemoveTransient(Player player, String permission) {
@@ -387,6 +409,7 @@ public abstract class Permission {
      * @param world World name
      * @param group Group name
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     abstract public boolean groupHas(String world, String group, String permission);
@@ -399,6 +422,7 @@ public abstract class Permission {
      * @param world World Object
      * @param group Group name
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean groupHas(World world, String group, String permission) {
@@ -416,6 +440,7 @@ public abstract class Permission {
      * @param world World name
      * @param group Group name
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     abstract public boolean groupAdd(String world, String group, String permission);
@@ -428,6 +453,7 @@ public abstract class Permission {
      * @param world World Object
      * @param group Group name
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean groupAdd(World world, String group, String permission) {
@@ -445,6 +471,7 @@ public abstract class Permission {
      * @param world World name
      * @param group Group name
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     abstract public boolean groupRemove(String world, String group, String permission);
@@ -457,6 +484,7 @@ public abstract class Permission {
      * @param world World Object
      * @param group Group name
      * @param permission Permission node
+     *
      * @return Success or Failure
      */
     public boolean groupRemove(World world, String group, String permission) {
@@ -491,6 +519,7 @@ public abstract class Permission {
      * @param world World Object
      * @param player to check
      * @param group Group name
+     *
      * @return Success or Failure
      */
     public boolean playerInGroup(String world, OfflinePlayer player, String group) {
@@ -507,6 +536,7 @@ public abstract class Permission {
      *
      * @param player Player Object
      * @param group Group name
+     *
      * @return Success or Failure
      */
     public boolean playerInGroup(Player player, String group) {
@@ -538,6 +568,7 @@ public abstract class Permission {
      * @param world String world name
      * @param player to add
      * @param group Group name
+     *
      * @return Success or Failure
      */
     public boolean playerAddGroup(String world, OfflinePlayer player, String group) {
@@ -554,6 +585,7 @@ public abstract class Permission {
      *
      * @param player Player Object
      * @param group Group name
+     *
      * @return Success or Failure
      */
     public boolean playerAddGroup(Player player, String group) {
@@ -585,6 +617,7 @@ public abstract class Permission {
      * @param world World Object
      * @param player to remove
      * @param group Group name
+     *
      * @return Success or Failure
      */
     public boolean playerRemoveGroup(String world, OfflinePlayer player, String group) {
@@ -601,6 +634,7 @@ public abstract class Permission {
      *
      * @param player Player Object
      * @param group Group name
+     *
      * @return Success or Failure
      */
     public boolean playerRemoveGroup(Player player, String group) {
@@ -631,6 +665,7 @@ public abstract class Permission {
      *
      * @param world String world name
      * @param player OfflinePlayer
+     *
      * @return Array of groups
      */
     public String[] getPlayerGroups(String world, OfflinePlayer player) {
@@ -643,6 +678,7 @@ public abstract class Permission {
      * See {@link #getPlayerGroups(String, OfflinePlayer)} for better control of World-specific or global groups.
      *
      * @param player Player Object
+     *
      * @return Array of groups
      */
     public String[] getPlayerGroups(Player player) {
@@ -673,6 +709,7 @@ public abstract class Permission {
      *
      * @param world String world name
      * @param player to get from
+     *
      * @return Players primary group
      */
     public String getPrimaryGroup(String world, OfflinePlayer player) {
@@ -685,6 +722,7 @@ public abstract class Permission {
      * In most cases {@link #getPrimaryGroup(String, OfflinePlayer)} is preferable.
      *
      * @param player Player Object
+     *
      * @return Players primary group
      */
     public String getPrimaryGroup(Player player) {
@@ -693,12 +731,14 @@ public abstract class Permission {
 
     /**
      * Returns a list of all known groups
+     *
      * @return an Array of String of all groups
      */
     abstract public String[] getGroups();
 
     /**
      * Returns true if the given implementation supports groups.
+     *
      * @return true if the implementation supports groups
      */
     abstract public boolean hasGroupSupport();

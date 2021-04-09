@@ -15,10 +15,7 @@
  */
 package net.milkbowl.vault.permission.plugins;
 
-import java.util.List;
-
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -28,10 +25,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
-
 import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
+
+import java.util.List;
 
 public class Permission_PermissionsEx extends Permission {
 
@@ -49,7 +47,11 @@ public class Permission_PermissionsEx extends Permission {
                 if (perms.isEnabled()) {
                     try {
                         if (Double.valueOf(perms.getDescription().getVersion()) < 1.16) {
-                            log.info(String.format("[%s][Permission] %s below 1.16 is not compatible with Vault! Falling back to SuperPerms only mode. PLEASE UPDATE!", plugin.getDescription().getName(), name));
+                            log.info(String.format(
+                                    "[%s][Permission] %s below 1.16 is not compatible with Vault! Falling back to SuperPerms only mode. PLEASE UPDATE!",
+                                    plugin.getDescription().getName(),
+                                    name
+                            ));
                         }
                     } catch (NumberFormatException e) {
                         // Do nothing
@@ -84,7 +86,11 @@ public class Permission_PermissionsEx extends Permission {
                 if (perms.getDescription().getName().equals("PermissionsEx")) {
                     try {
                         if (Double.valueOf(perms.getDescription().getVersion()) < 1.16) {
-                            log.info(String.format("[%s][Permission] %s below 1.16 is not compatible with Vault! Falling back to SuperPerms only mode. PLEASE UPDATE!", plugin.getDescription().getName(), name));
+                            log.info(String.format(
+                                    "[%s][Permission] %s below 1.16 is not compatible with Vault! Falling back to SuperPerms only mode. PLEASE UPDATE!",
+                                    plugin.getDescription().getName(),
+                                    name
+                            ));
                             return;
                         }
                     } catch (NumberFormatException e) {
@@ -114,11 +120,11 @@ public class Permission_PermissionsEx extends Permission {
 
     @Override
     public boolean playerInGroup(String worldName, OfflinePlayer op, String groupName) {
-    	PermissionUser user = getUser(op);
-    	if (user == null) {
-    		return false;
-    	}
-    	return user.inGroup(groupName, worldName);
+        PermissionUser user = getUser(op);
+        if (user == null) {
+            return false;
+        }
+        return user.inGroup(groupName, worldName);
     }
 
     @Override
@@ -152,9 +158,9 @@ public class Permission_PermissionsEx extends Permission {
 
     @Override
     public boolean playerRemoveGroup(String worldName, OfflinePlayer op, String groupName) {
-    	PermissionUser user = getUser(op);
-    	user.removeGroup(groupName, worldName);
-    	return true;
+        PermissionUser user = getUser(op);
+        user.removeGroup(groupName, worldName);
+        return true;
     }
 
     @Override
@@ -240,35 +246,35 @@ public class Permission_PermissionsEx extends Permission {
     }
 
     private PermissionUser getUser(OfflinePlayer op) {
-    	return PermissionsEx.getPermissionManager().getUser(op.getUniqueId());
+        return PermissionsEx.getPermissionManager().getUser(op.getUniqueId());
     }
-    
+
     private PermissionUser getUser(String playerName) {
-    	return PermissionsEx.getPermissionManager().getUser(playerName);
+        return PermissionsEx.getPermissionManager().getUser(playerName);
     }
 
     @Override
     public String[] getPlayerGroups(String world, OfflinePlayer op) {
-    	PermissionUser user = getUser(op);
-    	return user == null ? null : user.getParentIdentifiers(world).toArray(new String[0]);
+        PermissionUser user = getUser(op);
+        return user == null ? null : user.getParentIdentifiers(world).toArray(new String[0]);
     }
 
     @Override
     public String[] getPlayerGroups(String world, String playerName) {
-    	PermissionUser user = getUser(playerName);
-    	return user == null ? null : user.getParentIdentifiers(world).toArray(new String[0]);
+        PermissionUser user = getUser(playerName);
+        return user == null ? null : user.getParentIdentifiers(world).toArray(new String[0]);
     }
 
     @Override
     public String getPrimaryGroup(String world, OfflinePlayer op) {
-    	PermissionUser user = getUser(op);
-    	if (user == null) {
-    		return null;
-    	} else if (user.getParentIdentifiers(world).size() > 0) {
-    		return user.getParentIdentifiers(world).get(0);
-    	} else {
-    		return null;
-    	}
+        PermissionUser user = getUser(op);
+        if (user == null) {
+            return null;
+        } else if (user.getParentIdentifiers(world).size() > 0) {
+            return user.getParentIdentifiers(world).get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -285,7 +291,7 @@ public class Permission_PermissionsEx extends Permission {
 
     @Override
     public boolean playerHas(String worldName, OfflinePlayer op, String permission) {
-    	PermissionUser user = getUser(op);
+        PermissionUser user = getUser(op);
         if (user != null) {
             return user.has(permission, worldName);
         } else {
@@ -306,7 +312,7 @@ public class Permission_PermissionsEx extends Permission {
 
     @Override
     public boolean playerAddTransient(String worldName, Player player, String permission) {
-    	PermissionUser pPlayer = getUser(player);
+        PermissionUser pPlayer = getUser(player);
         if (pPlayer != null) {
             pPlayer.addTimedPermission(permission, worldName, 0);
             return true;

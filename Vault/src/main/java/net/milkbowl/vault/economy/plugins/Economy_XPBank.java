@@ -16,13 +16,13 @@
 
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.List;
-import java.util.logging.Logger;
-
+import com.gmail.mirelatrue.xpbank.API;
+import com.gmail.mirelatrue.xpbank.Account;
+import com.gmail.mirelatrue.xpbank.GroupBank;
+import com.gmail.mirelatrue.xpbank.XPBank;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,10 +31,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.gmail.mirelatrue.xpbank.API;
-import com.gmail.mirelatrue.xpbank.Account;
-import com.gmail.mirelatrue.xpbank.GroupBank;
-import com.gmail.mirelatrue.xpbank.XPBank;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_XPBank extends AbstractEconomy {
 
@@ -44,7 +42,7 @@ public class Economy_XPBank extends AbstractEconomy {
     private XPBank XPB = null;
     private API api = null;
 
-    public Economy_XPBank (Plugin plugin) {
+    public Economy_XPBank(Plugin plugin) {
         this.plugin = plugin;
         this.log = plugin.getLogger();
         Bukkit.getServer().getPluginManager().registerEvents(new EconomyServerListener(this), plugin);
@@ -63,12 +61,12 @@ public class Economy_XPBank extends AbstractEconomy {
     public class EconomyServerListener implements Listener {
         Economy_XPBank economy = null;
 
-        public EconomyServerListener (Economy_XPBank economy_XPBank) {
+        public EconomyServerListener(Economy_XPBank economy_XPBank) {
             this.economy = economy_XPBank;
         }
 
-        @EventHandler (priority = EventPriority.MONITOR)
-        public void onPluginEnable (PluginEnableEvent event) {
+        @EventHandler(priority = EventPriority.MONITOR)
+        public void onPluginEnable(PluginEnableEvent event) {
             if (economy.XPB == null) {
                 Plugin eco = event.getPlugin();
 
@@ -80,8 +78,8 @@ public class Economy_XPBank extends AbstractEconomy {
             }
         }
 
-        @EventHandler (priority = EventPriority.MONITOR)
-        public void onPluginDisable (PluginDisableEvent event) {
+        @EventHandler(priority = EventPriority.MONITOR)
+        public void onPluginDisable(PluginDisableEvent event) {
             if (economy.XPB != null) {
                 if (event.getPlugin().getDescription().getName().equals("XPBank")) {
                     economy.XPB = null;
@@ -92,42 +90,42 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public boolean isEnabled () {
+    public boolean isEnabled() {
         return this.XPB != null;
     }
 
     @Override
-    public String getName () {
+    public String getName() {
         return name;
     }
 
     @Override
-    public boolean hasBankSupport () {
+    public boolean hasBankSupport() {
         return true;
     }
 
     @Override
-    public int fractionalDigits () {
+    public int fractionalDigits() {
         return 0;
     }
 
     @Override
-    public String format (double amount) {
+    public String format(double amount) {
         return String.format("%d %s", (int) amount, api.currencyName((int) amount));
     }
 
     @Override
-    public String currencyNamePlural () {
+    public String currencyNamePlural() {
         return api.getMsg("CurrencyNamePlural");
     }
 
     @Override
-    public String currencyNameSingular () {
+    public String currencyNameSingular() {
         return api.getMsg("currencyName");
     }
 
     @Override
-    public boolean hasAccount (String playerName) {
+    public boolean hasAccount(String playerName) {
         Account account = api.getAccount(playerName);
 
         if (account != null) {
@@ -138,14 +136,14 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public double getBalance (String playerName) {
+    public double getBalance(String playerName) {
         Account account = api.getAccount(playerName);
 
         return account.getBalance();
     }
 
     @Override
-    public boolean has (String playerName, double amount) {
+    public boolean has(String playerName, double amount) {
         Account account = api.getAccount(playerName);
 
         if (account.getBalance() >= (int) amount) {
@@ -156,7 +154,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse withdrawPlayer (String playerName, double amount) {
+    public EconomyResponse withdrawPlayer(String playerName, double amount) {
         Account account = api.getAccount(playerName);
 
         if (account == null) {
@@ -180,7 +178,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse depositPlayer (String playerName, double amount) {
+    public EconomyResponse depositPlayer(String playerName, double amount) {
         Account account = api.getAccount(playerName);
 
         if (account == null) {
@@ -202,7 +200,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse createBank (String name, String player) {
+    public EconomyResponse createBank(String name, String player) {
         GroupBank groupBank = api.getGroupBank(name);
 
         if (groupBank != null) {
@@ -217,7 +215,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse deleteBank (String name) {
+    public EconomyResponse deleteBank(String name) {
         GroupBank groupBank = api.getGroupBank(name);
 
         if (groupBank == null) {
@@ -230,7 +228,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse bankBalance (String name) {
+    public EconomyResponse bankBalance(String name) {
         GroupBank groupBank = api.getGroupBank(name);
 
         if (groupBank == null) {
@@ -241,7 +239,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse bankHas (String name, double amount) {
+    public EconomyResponse bankHas(String name, double amount) {
         GroupBank groupBank = api.getGroupBank(name);
 
         if (groupBank == null) {
@@ -259,7 +257,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse bankWithdraw (String name, double amount) {
+    public EconomyResponse bankWithdraw(String name, double amount) {
         GroupBank groupBank = api.getGroupBank(name);
 
         if (groupBank == null) {
@@ -283,7 +281,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse bankDeposit (String name, double amount) {
+    public EconomyResponse bankDeposit(String name, double amount) {
         GroupBank groupBank = api.getGroupBank(name);
 
         if (groupBank == null) {
@@ -303,7 +301,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse isBankOwner (String name, String playerName) {
+    public EconomyResponse isBankOwner(String name, String playerName) {
         GroupBank groupBank = api.getGroupBank(name);
 
         if (groupBank == null) {
@@ -324,7 +322,7 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse isBankMember (String name, String playerName) {
+    public EconomyResponse isBankMember(String name, String playerName) {
         GroupBank groupBank = api.getGroupBank(name);
 
         if (groupBank == null) {
@@ -345,12 +343,12 @@ public class Economy_XPBank extends AbstractEconomy {
     }
 
     @Override
-    public List<String> getBanks () {
+    public List<String> getBanks() {
         return api.getAllGroupBanks();
     }
 
     @Override
-    public boolean createPlayerAccount (String playerName) {
+    public boolean createPlayerAccount(String playerName) {
         api.createAccount(playerName);
 
         return true;

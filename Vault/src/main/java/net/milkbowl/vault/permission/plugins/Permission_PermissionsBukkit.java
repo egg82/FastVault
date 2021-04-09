@@ -15,11 +15,10 @@
  */
 package net.milkbowl.vault.permission.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.platymuus.bukkit.permissions.Group;
+import com.platymuus.bukkit.permissions.PermissionInfo;
+import com.platymuus.bukkit.permissions.PermissionsPlugin;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,9 +27,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import com.platymuus.bukkit.permissions.Group;
-import com.platymuus.bukkit.permissions.PermissionInfo;
-import com.platymuus.bukkit.permissions.PermissionsPlugin;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Permission_PermissionsBukkit extends Permission {
 
@@ -124,7 +122,9 @@ public class Permission_PermissionsBukkit extends Permission {
     @Override
     public boolean groupHas(String world, String group, String permission) {
         if (world != null && !world.isEmpty()) {
-            return perms.getGroup(group).getInfo().getWorldPermissions(world).get(permission) == null ? false : perms.getGroup(group).getInfo().getWorldPermissions(world).get(permission);
+            return perms.getGroup(group).getInfo().getWorldPermissions(world).get(permission) == null
+                   ? false
+                   : perms.getGroup(group).getInfo().getWorldPermissions(world).get(permission);
         }
         if (perms.getGroup(group) == null) {
             return false;
@@ -209,7 +209,7 @@ public class Permission_PermissionsBukkit extends Permission {
     public String getPrimaryGroup(String world, String player) {
         if (perms.getPlayerInfo(player) == null) {
             return null;
-        } else if (perms.getPlayerInfo(player).getGroups() != null && !perms.getPlayerInfo(player).getGroups().isEmpty() ) {
+        } else if (perms.getPlayerInfo(player).getGroups() != null && !perms.getPlayerInfo(player).getGroups().isEmpty()) {
             return perms.getPlayerInfo(player).getGroups().get(0).getName();
         }
         return null;

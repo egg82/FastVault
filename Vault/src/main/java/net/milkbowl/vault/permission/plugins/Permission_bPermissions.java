@@ -15,10 +15,11 @@
  */
 package net.milkbowl.vault.permission.plugins;
 
-import java.util.List;
-
+import de.bananaco.permissions.Permissions;
+import de.bananaco.permissions.interfaces.PermissionSet;
+import de.bananaco.permissions.worlds.HasPermission;
+import de.bananaco.permissions.worlds.WorldPermissionsManager;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,10 +28,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import de.bananaco.permissions.Permissions;
-import de.bananaco.permissions.interfaces.PermissionSet;
-import de.bananaco.permissions.worlds.HasPermission;
-import de.bananaco.permissions.worlds.WorldPermissionsManager;
+import java.util.List;
 
 public class Permission_bPermissions extends Permission {
 
@@ -40,7 +38,7 @@ public class Permission_bPermissions extends Permission {
     public Permission_bPermissions(Plugin plugin) {
         this.plugin = plugin;
         Bukkit.getServer().getPluginManager().registerEvents(new PermissionServerListener(), plugin);
-        
+
         // Load Plugin in case it was loaded before
         if (perms == null) {
             Plugin p = plugin.getServer().getPluginManager().getPlugin("bPermissions");
@@ -52,12 +50,12 @@ public class Permission_bPermissions extends Permission {
     }
 
     public class PermissionServerListener implements Listener {
-        
+
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginEnable(PluginEnableEvent event) {
             if (perms == null) {
                 Plugin p = event.getPlugin();
-                if(p.getDescription().getName().equals("bPermissions") && p.isEnabled()) {
+                if (p.getDescription().getName().equals("bPermissions") && p.isEnabled()) {
                     perms = Permissions.getWorldPermissionsManager();
                     log.info(String.format("[%s][Permission] %s hooked.", plugin.getDescription().getName(), name));
                 }

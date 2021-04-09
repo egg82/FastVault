@@ -7,13 +7,17 @@ public abstract class AbstractEconomy implements Economy {
 
     @Override
     public boolean hasAccount(OfflinePlayer player) {
-        if (player.getName() == null) return false;
+        if (player.getName() == null) {
+            return false;
+        }
         return hasAccount(player.getName());
     }
 
     @Override
     public boolean hasAccount(OfflinePlayer player, String worldName) {
-        if (player.getName() == null) return false;
+        if (player.getName() == null) {
+            return false;
+        }
         return hasAccount(player.getName(), worldName);
     }
 
@@ -29,13 +33,17 @@ public abstract class AbstractEconomy implements Economy {
 
     @Override
     public boolean has(OfflinePlayer player, double amount) {
-        if (player.getName() == null) return false;
+        if (player.getName() == null) {
+            return false;
+        }
         return has(player.getName(), amount);
     }
 
     @Override
     public boolean has(OfflinePlayer player, String worldName, double amount) {
-        if (player.getName() == null) return false;
+        if (player.getName() == null) {
+            return false;
+        }
         return has(player.getName(), worldName, amount);
     }
 

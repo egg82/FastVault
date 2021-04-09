@@ -15,68 +15,13 @@
  */
 package net.milkbowl.vault;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Collection;
-import java.util.concurrent.Callable;
-import java.util.logging.Logger;
-
+import com.nijikokun.register.payment.Methods;
 import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.chat.plugins.Chat_DroxPerms;
-import net.milkbowl.vault.chat.plugins.Chat_GroupManager;
-import net.milkbowl.vault.chat.plugins.Chat_OverPermissions;
-import net.milkbowl.vault.chat.plugins.Chat_Permissions3;
-import net.milkbowl.vault.chat.plugins.Chat_PermissionsEx;
-import net.milkbowl.vault.chat.plugins.Chat_Privileges;
-import net.milkbowl.vault.chat.plugins.Chat_bPermissions;
-import net.milkbowl.vault.chat.plugins.Chat_bPermissions2;
-import net.milkbowl.vault.chat.plugins.Chat_iChat;
-import net.milkbowl.vault.chat.plugins.Chat_mChat;
-import net.milkbowl.vault.chat.plugins.Chat_mChatSuite;
-import net.milkbowl.vault.chat.plugins.Chat_rscPermissions;
+import net.milkbowl.vault.chat.plugins.*;
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.plugins.Economy_BOSE7;
-import net.milkbowl.vault.economy.plugins.Economy_CommandsEX;
-import net.milkbowl.vault.economy.plugins.Economy_Craftconomy3;
-import net.milkbowl.vault.economy.plugins.Economy_CurrencyCore;
-import net.milkbowl.vault.economy.plugins.Economy_DigiCoin;
-import net.milkbowl.vault.economy.plugins.Economy_Dosh;
-import net.milkbowl.vault.economy.plugins.Economy_EconXP;
-import net.milkbowl.vault.economy.plugins.Economy_Essentials;
-import net.milkbowl.vault.economy.plugins.Economy_GoldIsMoney2;
-import net.milkbowl.vault.economy.plugins.Economy_GoldenChestEconomy;
-import net.milkbowl.vault.economy.plugins.Economy_Gringotts;
-import net.milkbowl.vault.economy.plugins.Economy_McMoney;
-import net.milkbowl.vault.economy.plugins.Economy_MineConomy;
-import net.milkbowl.vault.economy.plugins.Economy_MultiCurrency;
-import net.milkbowl.vault.economy.plugins.Economy_TAEcon;
-import net.milkbowl.vault.economy.plugins.Economy_XPBank;
-import net.milkbowl.vault.economy.plugins.Economy_eWallet;
-import net.milkbowl.vault.economy.plugins.Economy_iConomy6;
-import net.milkbowl.vault.economy.plugins.Economy_SDFEconomy;
-import net.milkbowl.vault.economy.plugins.Economy_Minefaconomy;  
+import net.milkbowl.vault.economy.plugins.*;
 import net.milkbowl.vault.permission.Permission;
-import net.milkbowl.vault.permission.plugins.Permission_DroxPerms;
-import net.milkbowl.vault.permission.plugins.Permission_GroupManager;
-import net.milkbowl.vault.permission.plugins.Permission_OverPermissions;
-import net.milkbowl.vault.permission.plugins.Permission_Permissions3;
-import net.milkbowl.vault.permission.plugins.Permission_PermissionsBukkit;
-import net.milkbowl.vault.permission.plugins.Permission_PermissionsEx;
-import net.milkbowl.vault.permission.plugins.Permission_Privileges;
-import net.milkbowl.vault.permission.plugins.Permission_SimplyPerms;
-import net.milkbowl.vault.permission.plugins.Permission_Starburst;
-import net.milkbowl.vault.permission.plugins.Permission_SuperPerms;
-import net.milkbowl.vault.permission.plugins.Permission_Xperms;
-import net.milkbowl.vault.permission.plugins.Permission_bPermissions;
-import net.milkbowl.vault.permission.plugins.Permission_bPermissions2;
-import net.milkbowl.vault.permission.plugins.Permission_TotalPermissions;
-import net.milkbowl.vault.permission.plugins.Permission_rscPermissions;
-import net.milkbowl.vault.permission.plugins.Permission_KPerms;
-
+import net.milkbowl.vault.permission.plugins.*;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
@@ -99,10 +44,15 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import com.nijikokun.register.payment.Methods;
-
-import net.milkbowl.vault.chat.plugins.Chat_TotalPermissions;
-import net.milkbowl.vault.economy.plugins.Economy_MiConomy;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Collection;
+import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
 public class Vault extends JavaPlugin {
 
@@ -150,8 +100,7 @@ public class Vault extends JavaPlugin {
             public void run() {
                 // Programmatically set the default permission value cause Bukkit doesn't handle plugin.yml properly for Load order STARTUP plugins
                 org.bukkit.permissions.Permission perm = getServer().getPluginManager().getPermission("vault.update");
-                if (perm == null)
-                {
+                if (perm == null) {
                     perm = new org.bukkit.permissions.Permission("vault.update");
                     perm.setDefault(PermissionDefault.OP);
                     plugin.getServer().getPluginManager().addPermission(perm);
@@ -164,7 +113,7 @@ public class Vault extends JavaPlugin {
                     public void run() {
                         if (getServer().getConsoleSender().hasPermission("vault.update") && getConfig().getBoolean("update-check", true)) {
                             try {
-                            	log.info("Checking for Updates ... ");
+                                log.info("Checking for Updates ... ");
                                 newVersion = updateCheck(currentVersion);
                                 if (newVersion > currentVersion) {
                                     log.warning("Stable Version: " + newVersionTitle + " is out!" + " You are still running version: " + currentVersionTitle);
@@ -271,7 +220,14 @@ public class Vault extends JavaPlugin {
         hookEconomy("Gringotts", Economy_Gringotts.class, ServicePriority.Normal, "org.gestern.gringotts.Gringotts");
 
         // Try to load Essentials Economy
-        hookEconomy("Essentials Economy", Economy_Essentials.class, ServicePriority.Low, "com.earth2me.essentials.api.Economy", "com.earth2me.essentials.api.NoLoanPermittedException",  "com.earth2me.essentials.api.UserDoesNotExistException");
+        hookEconomy(
+                "Essentials Economy",
+                Economy_Essentials.class,
+                ServicePriority.Low,
+                "com.earth2me.essentials.api.Economy",
+                "com.earth2me.essentials.api.NoLoanPermittedException",
+                "com.earth2me.essentials.api.UserDoesNotExistException"
+        );
 
         // Try to load iConomy 6
         hookEconomy("iConomy 6", Economy_iConomy6.class, ServicePriority.High, "com.iCo6.iConomy");
@@ -360,7 +316,7 @@ public class Vault extends JavaPlugin {
         this.perms = sm.getRegistration(Permission.class).getProvider();
     }
 
-    private void hookChat (String name, Class<? extends Chat> hookClass, ServicePriority priority, String...packages) {
+    private void hookChat(String name, Class<? extends Chat> hookClass, ServicePriority priority, String... packages) {
         try {
             if (packagesExists(packages)) {
                 Chat chat = hookClass.getConstructor(Plugin.class, Permission.class).newInstance(this, perms);
@@ -372,7 +328,7 @@ public class Vault extends JavaPlugin {
         }
     }
 
-    private void hookEconomy (String name, Class<? extends Economy> hookClass, ServicePriority priority, String...packages) {
+    private void hookEconomy(String name, Class<? extends Economy> hookClass, ServicePriority priority, String... packages) {
         try {
             if (packagesExists(packages)) {
                 Economy econ = hookClass.getConstructor(Plugin.class).newInstance(this);
@@ -384,7 +340,7 @@ public class Vault extends JavaPlugin {
         }
     }
 
-    private void hookPermission (String name, Class<? extends Permission> hookClass, ServicePriority priority, String...packages) {
+    private void hookPermission(String name, Class<? extends Permission> hookClass, ServicePriority priority, String... packages) {
         try {
             if (packagesExists(packages)) {
                 Permission perms = hookClass.getConstructor(Plugin.class).newInstance(this);
@@ -438,7 +394,7 @@ public class Vault extends JavaPlugin {
                 econ2 = econ.getProvider();
             }
             if (economies.length() > 0) {
-            	economies += ", ";
+                economies += ", ";
             }
             economies += econName;
         }
@@ -462,11 +418,11 @@ public class Vault extends JavaPlugin {
                 econ2.createPlayerAccount(op);
                 double diff = econ1.getBalance(op) - econ2.getBalance(op);
                 if (diff > 0) {
-                	econ2.depositPlayer(op, diff);
+                    econ2.depositPlayer(op, diff);
                 } else if (diff < 0) {
-                	econ2.withdrawPlayer(op, -diff);
+                    econ2.withdrawPlayer(op, -diff);
                 }
-                
+
             }
         }
         sender.sendMessage("Converson complete, please verify the data before using it.");
@@ -536,10 +492,12 @@ public class Vault extends JavaPlugin {
      * This is the best way to determine if a specific plugin exists and will be
      * loaded. If the plugin package isn't loaded, we shouldn't bother waiting
      * for it!
+     *
      * @param packages String Array of package names to check
+     *
      * @return Success or Failure
      */
-    private static boolean packagesExists(String...packages) {
+    private static boolean packagesExists(String... packages) {
         try {
             for (String pkg : packages) {
                 Class.forName(pkg);
@@ -621,7 +579,7 @@ public class Vault extends JavaPlugin {
             if (perms.has(player, "vault.update")) {
                 try {
                     if (newVersion > currentVersion) {
-                        player.sendMessage("Vault " +  newVersionTitle + " is out! You are running " + currentVersionTitle);
+                        player.sendMessage("Vault " + newVersionTitle + " is out! You are running " + currentVersionTitle);
                         player.sendMessage("Update Vault at: " + VAULT_BUKKIT_URL);
                     }
                 } catch (Exception e) {

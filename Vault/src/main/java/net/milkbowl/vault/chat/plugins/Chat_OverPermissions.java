@@ -12,21 +12,19 @@
 */
 package net.milkbowl.vault.chat.plugins;
 
+import com.overmc.overpermissions.api.GroupManager;
+import com.overmc.overpermissions.api.PermissionGroup;
+import com.overmc.overpermissions.api.PermissionUser;
+import com.overmc.overpermissions.api.UserManager;
+import com.overmc.overpermissions.internal.OverPermissions;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
-
-import com.overmc.overpermissions.api.GroupManager;
-import com.overmc.overpermissions.api.PermissionGroup;
-import com.overmc.overpermissions.api.PermissionUser;
-import com.overmc.overpermissions.api.UserManager;
-import com.overmc.overpermissions.internal.OverPermissions;
 
 public class Chat_OverPermissions extends Chat {
     protected final Plugin plugin;
@@ -46,18 +44,18 @@ public class Chat_OverPermissions extends Chat {
                 overPerms = (OverPermissions) p;
                 userManager = overPerms.getUserManager();
                 groupManager = overPerms.getGroupManager();
-                plugin.getLogger().info(String.format("[%s][Chat] %s hooked.", new Object[] {plugin.getDescription().getName(), "OverPermissions"}));
+                plugin.getLogger().info(String.format("[%s][Chat] %s hooked.", new Object[] { plugin.getDescription().getName(), "OverPermissions" }));
             }
         }
     }
 
     @Override
-    public String getName( ) {
+    public String getName() {
         return "OverPermissions_Chat";
     }
 
     @Override
-    public boolean isEnabled( ) {
+    public boolean isEnabled() {
         return overPerms != null;
     }
 
@@ -107,8 +105,7 @@ public class Chat_OverPermissions extends Chat {
         if (s == null) {
             return defaultValue;
         }
-        try
-        {
+        try {
             return Integer.valueOf(s).intValue();
         } catch (NumberFormatException e) {
         }
@@ -126,8 +123,7 @@ public class Chat_OverPermissions extends Chat {
         if (s == null) {
             return defaultValue;
         }
-        try
-        {
+        try {
             return Integer.valueOf(s).intValue();
         } catch (NumberFormatException e) {
         }
@@ -145,8 +141,7 @@ public class Chat_OverPermissions extends Chat {
         if (s == null) {
             return defaultValue;
         }
-        try
-        {
+        try {
             return Double.valueOf(s).doubleValue();
         } catch (NumberFormatException e) {
         }
@@ -164,8 +159,7 @@ public class Chat_OverPermissions extends Chat {
         if (s == null) {
             return defaultValue;
         }
-        try
-        {
+        try {
             return Double.valueOf(s).doubleValue();
         } catch (NumberFormatException e) {
         }
@@ -300,7 +294,7 @@ public class Chat_OverPermissions extends Chat {
                 Plugin chat = plugin.getServer().getPluginManager().getPlugin("OverPermissions");
                 if (chat != null) {
                     this.chat.overPerms = (OverPermissions) chat;
-                    plugin.getLogger().info(String.format("[%s][Chat] %s hooked.", new Object[] {plugin.getDescription().getName(), getName()}));
+                    plugin.getLogger().info(String.format("[%s][Chat] %s hooked.", new Object[] { plugin.getDescription().getName(), getName() }));
                 }
             }
         }
@@ -310,7 +304,7 @@ public class Chat_OverPermissions extends Chat {
             if ((chat.overPerms != null) &&
                     (event.getPlugin().getDescription().getName().equals("OverPermissions"))) {
                 chat.overPerms = null;
-                plugin.getLogger().info(String.format("[%s][Chat] %s un-hooked.", new Object[] {plugin.getDescription().getName(), getName()}));
+                plugin.getLogger().info(String.format("[%s][Chat] %s un-hooked.", new Object[] { plugin.getDescription().getName(), getName() }));
             }
         }
     }

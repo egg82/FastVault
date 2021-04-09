@@ -1,9 +1,8 @@
 package net.milkbowl.vault.permission.plugins;
 
-import java.util.ArrayList;
-
+import de.hydrox.bukkit.DroxPerms.DroxPerms;
+import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,8 +12,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import de.hydrox.bukkit.DroxPerms.DroxPerms;
-import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
+import java.util.ArrayList;
 
 public class Permission_DroxPerms extends Permission {
 
@@ -53,8 +51,8 @@ public class Permission_DroxPerms extends Permission {
 
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginDisable(PluginDisableEvent event) {
-            if(API != null) {
-                if(event.getPlugin().getDescription().getName().equals("DroxPerms")) {
+            if (API != null) {
+                if (event.getPlugin().getDescription().getName().equals("DroxPerms")) {
                     API = null;
                     log.info(String.format("[%s][Permission] %s un-hooked.", plugin.getDescription().getName(), name));
                 }

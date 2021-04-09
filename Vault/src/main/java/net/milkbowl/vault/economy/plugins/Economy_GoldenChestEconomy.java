@@ -15,9 +15,10 @@ along with Vault.  If not, see <http://www.gnu.org/licenses/>.
 */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.List;
-import java.util.logging.Logger;
-
+import me.igwb.GoldenChest.GoldenChestEconomy;
+import net.milkbowl.vault.economy.AbstractEconomy;
+import net.milkbowl.vault.economy.EconomyResponse;
+import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,20 +27,18 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import me.igwb.GoldenChest.GoldenChestEconomy;
-import net.milkbowl.vault.economy.AbstractEconomy;
-import net.milkbowl.vault.economy.EconomyResponse;
-import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_GoldenChestEconomy extends AbstractEconomy {
     private final Logger log;
-    
+
     private final String name = "GoldenChestEconomy";
     private Plugin plugin = null;
     private GoldenChestEconomy economy = null;
-    
-    
-    public Economy_GoldenChestEconomy (Plugin plugin) {
+
+
+    public Economy_GoldenChestEconomy(Plugin plugin) {
         this.plugin = plugin;
         this.log = plugin.getLogger();
         Bukkit.getServer().getPluginManager().registerEvents(new EconomyServerListener(this), plugin);
@@ -52,26 +51,26 @@ public class Economy_GoldenChestEconomy extends AbstractEconomy {
             }
         }
     }
-    
+
     public class EconomyServerListener implements Listener {
         Economy_GoldenChestEconomy economy = null;
-    
+
         public EconomyServerListener(Economy_GoldenChestEconomy economy_GoldenChestEconomy) {
             this.economy = economy_GoldenChestEconomy;
         }
-    
+
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginEnable(PluginEnableEvent event) {
             if (economy.economy == null) {
                 Plugin ec = event.getPlugin();
-    
+
                 if (ec.getDescription().getName().equals("GoldenChestEconomy") && ec.getClass().getName().equals("me.igwb.GoldenChest.GoldenChestEconomy")) {
                     economy.economy = (GoldenChestEconomy) ec;
                     log.info(String.format("[Economy] %s hooked.", economy.name));
                 }
             }
         }
-    
+
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginDisable(PluginDisableEvent event) {
             if (economy.economy != null) {
@@ -82,8 +81,8 @@ public class Economy_GoldenChestEconomy extends AbstractEconomy {
             }
         }
     }
-    
-    
+
+
     @Override
     public boolean isEnabled() {
         if (economy == null) {
@@ -95,7 +94,7 @@ public class Economy_GoldenChestEconomy extends AbstractEconomy {
 
     @Override
     public String getName() {
-       return name;
+        return name;
     }
 
     @Override
@@ -155,11 +154,11 @@ public class Economy_GoldenChestEconomy extends AbstractEconomy {
 
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
-        
+
         if (amount < 0) {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "Cannot withdraw negative funds");
         }
-    
+
         if (has(playerName, amount)) {
             economy.getVaultConnector().withdrawPlayer(playerName, amount);
             return new EconomyResponse(amount, getBalance(playerName), ResponseType.SUCCESS, null);
@@ -169,8 +168,10 @@ public class Economy_GoldenChestEconomy extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse withdrawPlayer(String playerName, String worldName,
-            double amount) {
+    public EconomyResponse withdrawPlayer(
+            String playerName, String worldName,
+            double amount
+    ) {
         return withdrawPlayer(playerName, amount);
     }
 
@@ -179,14 +180,16 @@ public class Economy_GoldenChestEconomy extends AbstractEconomy {
         if (amount < 0) {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "Cannot desposit negative funds");
         }
-        
+
         economy.getVaultConnector().depositPlayer(playerName, amount);
         return new EconomyResponse(amount, getBalance(playerName), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
     @Override
-    public EconomyResponse depositPlayer(String playerName, String worldName,
-            double amount) {
+    public EconomyResponse depositPlayer(
+            String playerName, String worldName,
+            double amount
+    ) {
         return depositPlayer(playerName, amount);
     }
 

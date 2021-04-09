@@ -16,10 +16,9 @@
 package net.milkbowl.vault.economy;
 
 /**
- * Indicates a typical Return for an Economy method.  
+ * Indicates a typical Return for an Economy method.
  * It includes a {@link ResponseType} indicating whether the plugin currently being used for Economy actually allows
  * the method, or if the operation was a success or failure.
- *
  */
 public class EconomyResponse {
 
@@ -62,6 +61,7 @@ public class EconomyResponse {
 
     /**
      * Constructor for EconomyResponse
+     *
      * @param amount Amount modified during operation
      * @param balance New balance of account
      * @param type Success or failure type of the operation
@@ -76,6 +76,7 @@ public class EconomyResponse {
 
     /**
      * Checks if an operation was successful
+     *
      * @return Value
      */
     public boolean transactionSuccess() {

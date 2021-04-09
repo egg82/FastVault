@@ -15,8 +15,11 @@
  */
 package net.milkbowl.vault.permission.plugins;
 
+import com.lightniinja.kperms.KGroup;
+import com.lightniinja.kperms.KPermsPlugin;
+import com.lightniinja.kperms.KPlayer;
+import com.lightniinja.kperms.Utilities;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,11 +29,6 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.List;
-
-import com.lightniinja.kperms.KPlayer;
-import com.lightniinja.kperms.KGroup;
-import com.lightniinja.kperms.Utilities;
-import com.lightniinja.kperms.KPermsPlugin;
 
 public class Permission_KPerms extends Permission {
 
@@ -59,7 +57,7 @@ public class Permission_KPerms extends Permission {
 
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginEnable(PluginEnableEvent event) {
-            if(bridge.kperms == null) {
+            if (bridge.kperms == null) {
                 Plugin plugin = event.getPlugin();
                 if (plugin.getDescription().getName().equals("KPerms")) {
                     bridge.kperms = (KPermsPlugin) plugin;
@@ -70,8 +68,8 @@ public class Permission_KPerms extends Permission {
 
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginDisable(PluginDisableEvent event) {
-            if(bridge.kperms != null){
-                if(event.getPlugin().getDescription().getName().equals(bridge.kperms.getName())) {
+            if (bridge.kperms != null) {
+                if (event.getPlugin().getDescription().getName().equals(bridge.kperms.getName())) {
                     bridge.kperms = null;
                     log.info(String.format("[%s][Permission] %s un-hooked.", vault.getDescription().getName(), "KPerms"));
                 }

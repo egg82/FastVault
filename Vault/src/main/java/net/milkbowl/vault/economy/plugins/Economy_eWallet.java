@@ -15,15 +15,10 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import me.ethan.eWallet.ECO;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,6 +26,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_eWallet extends AbstractEconomy {
     private final Logger log;
@@ -98,9 +97,9 @@ public class Economy_eWallet extends AbstractEconomy {
     public String format(double amount) {
         amount = Math.ceil(amount);
         if (amount == 1) {
-            return String.format("%d %s", (int)amount, econ.singularCurrency);
+            return String.format("%d %s", (int) amount, econ.singularCurrency);
         } else {
-            return String.format("%d %s", (int)amount, econ.pluralCurrency);
+            return String.format("%d %s", (int) amount, econ.pluralCurrency);
         }
     }
 
@@ -217,10 +216,10 @@ public class Economy_eWallet extends AbstractEconomy {
         return true;
     }
 
-	@Override
-	public int fractionalDigits() {
-		return 0;
-	}
+    @Override
+    public int fractionalDigits() {
+        return 0;
+    }
 
     @Override
     public boolean hasAccount(String playerName, String worldName) {

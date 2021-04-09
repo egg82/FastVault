@@ -15,13 +15,10 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.List;
-import java.util.logging.Logger;
-
+import cosine.boseconomy.BOSEconomy;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,7 +27,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import cosine.boseconomy.BOSEconomy;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_BOSE7 extends AbstractEconomy {
     private final Logger log;
@@ -86,13 +84,13 @@ public class Economy_BOSE7 extends AbstractEconomy {
         if (!has(playerName, amount)) {
             return new EconomyResponse(0, economy.getPlayerMoneyDouble(playerName), ResponseType.FAILURE, "Insufficient funds");
         }
-        
+
         double balance = economy.getPlayerMoneyDouble(playerName);
         if (economy.setPlayerMoney(playerName, balance - amount, false)) {
             balance = economy.getPlayerMoneyDouble(playerName);
             return new EconomyResponse(amount, balance, ResponseType.SUCCESS, "");
         } else {
-              return new EconomyResponse(0, balance, ResponseType.FAILURE, "Error withdrawing funds");
+            return new EconomyResponse(0, balance, ResponseType.FAILURE, "Error withdrawing funds");
         }
     }
 
@@ -178,7 +176,7 @@ public class Economy_BOSE7 extends AbstractEconomy {
         if (!economy.bankExists(name)) {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "That bank does not exist!");
         }
-        
+
         double bankMoney = economy.getBankMoneyDouble(name);
         if (bankMoney < amount) {
             return new EconomyResponse(0, bankMoney, ResponseType.FAILURE, "The bank does not have enough money!");
@@ -200,22 +198,23 @@ public class Economy_BOSE7 extends AbstractEconomy {
 
     @Override
     public EconomyResponse bankDeposit(String name, double amount) {
-        if (!economy.bankExists(name))
+        if (!economy.bankExists(name)) {
             return new EconomyResponse(amount, 0, ResponseType.FAILURE, "That bank does not exist!");
-        else {
-            economy.addBankMoney(name,  amount, true);
+        } else {
+            economy.addBankMoney(name, amount, true);
             return new EconomyResponse(amount, economy.getBankMoneyDouble(name), ResponseType.SUCCESS, "");
         }
     }
 
     @Override
     public EconomyResponse isBankOwner(String name, String playerName) {
-        if (!economy.bankExists(name))
+        if (!economy.bankExists(name)) {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "That bank does not exist!");
-        else if (economy.isBankOwner(name, playerName)) {
+        } else if (economy.isBankOwner(name, playerName)) {
             return new EconomyResponse(0, economy.getBankMoneyDouble(name), ResponseType.SUCCESS, "");
-        } else
+        } else {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "That player is not a bank owner!");
+        }
     }
 
     @Override
@@ -267,11 +266,11 @@ public class Economy_BOSE7 extends AbstractEconomy {
         return economy.registerPlayer(playerName);
     }
 
-	@Override
-	public int fractionalDigits() {
-		return economy.getFractionalDigits();
-	}
-	
+    @Override
+    public int fractionalDigits() {
+        return economy.getFractionalDigits();
+    }
+
 
     @Override
     public boolean hasAccount(String playerName, String worldName) {

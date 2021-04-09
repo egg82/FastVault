@@ -11,7 +11,7 @@ authors:
   - 'egg82'
 
 softdepend:
-# Permissions
+  # Permissions
   - 'bPermissions'
   - 'DroxPerms'
   - 'GroupManager'
@@ -28,11 +28,11 @@ softdepend:
   - 'TotalPermissions'
   - 'vPerms'
   - 'Xperms'
-# Chat
+  # Chat
   - 'iChat'
   - 'mChat'
   - 'mChatSuite'
-# Economy
+  # Economy
   - 'BOSEconomy'
   - 'CommandsEx'
   - 'Craftconomy3'
@@ -46,12 +46,12 @@ commands:
   vault-info:
     description: 'Displays information about Vault '
     usage: |
-           /<command> - Displays Vault information
+      /<command> - Displays Vault information
     permission: 'vault.admin'
   vault-convert:
     description: 'Converts all data in economy1 and dumps it into economy2'
     usage: |
-           /<command> [economy1] [economy2]
+      /<command> [economy1] [economy2]
     permission: 'vault.admin'
 
 permissions:

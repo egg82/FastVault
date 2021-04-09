@@ -15,11 +15,8 @@
  */
 package net.milkbowl.vault.chat.plugins;
 
-import java.util.logging.Logger;
-
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,8 +24,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
-
 import ru.simsonic.rscPermissions.MainPluginClass;
+
+import java.util.logging.Logger;
 
 public class Chat_rscPermissions extends Chat {
 
@@ -55,13 +53,14 @@ public class Chat_rscPermissions extends Chat {
     private class ChatServerListener implements Listener {
 
         private final Chat_rscPermissions bridge;
+
         public ChatServerListener(Chat_rscPermissions bridge) {
             this.bridge = bridge;
         }
 
         @EventHandler(priority = EventPriority.MONITOR)
         private void onPluginEnable(PluginEnableEvent event) {
-            if(bridge.rscp == null) {
+            if (bridge.rscp == null) {
                 Plugin plugin = event.getPlugin();
                 if (plugin.getDescription().getName().equals("rscPermissions")) {
                     bridge.rscp = (MainPluginClass) plugin;
@@ -73,8 +72,8 @@ public class Chat_rscPermissions extends Chat {
 
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginDisable(PluginDisableEvent event) {
-            if(bridge.rscpAPI != null) {
-                if(event.getPlugin().getDescription().getName().equals(bridge.rscpAPI.getName())) {
+            if (bridge.rscpAPI != null) {
+                if (event.getPlugin().getDescription().getName().equals(bridge.rscpAPI.getName())) {
                     bridge.rscpAPI = null;
                     bridge.rscp = null;
                     log.info(String.format("[%s][Chat] %s un-hooked.", vault.getDescription().getName(), "rscPermissions"));

@@ -15,11 +15,10 @@
 */
 package net.milkbowl.vault.chat.plugins;
 
-import java.util.logging.Logger;
-
+import de.bananaco.bpermissions.api.ApiLayer;
+import de.bananaco.bpermissions.api.CalculableType;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,8 +27,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import de.bananaco.bpermissions.api.ApiLayer;
-import de.bananaco.bpermissions.api.CalculableType;
+import java.util.logging.Logger;
 
 public class Chat_bPermissions2 extends Chat {
     private final Logger log;
@@ -238,7 +236,8 @@ public class Chat_bPermissions2 extends Chat {
 
     @Override
     public void setGroupInfoBoolean(String world, String group, String node, boolean value) {
-        ApiLayer.setValue(world, CalculableType.GROUP, group, node, String.valueOf(value));;
+        ApiLayer.setValue(world, CalculableType.GROUP, group, node, String.valueOf(value));
+        ;
     }
 
     @Override

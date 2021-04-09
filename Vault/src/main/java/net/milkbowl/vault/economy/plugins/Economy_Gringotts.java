@@ -15,14 +15,9 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -33,6 +28,10 @@ import org.bukkit.plugin.Plugin;
 import org.gestern.gringotts.Account;
 import org.gestern.gringotts.AccountHolder;
 import org.gestern.gringotts.Gringotts;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class Economy_Gringotts extends AbstractEconomy {
 
@@ -87,7 +86,7 @@ public class Economy_Gringotts extends AbstractEconomy {
     }
 
     @Override
-    public boolean isEnabled(){
+    public boolean isEnabled() {
         return gringotts != null && gringotts.isEnabled();
     }
 
@@ -97,12 +96,12 @@ public class Economy_Gringotts extends AbstractEconomy {
     }
 
     @Override
-    public boolean hasBankSupport(){
+    public boolean hasBankSupport() {
         return false;
     }
 
     @Override
-    public int fractionalDigits(){
+    public int fractionalDigits() {
         return 2;
     }
 
@@ -112,12 +111,12 @@ public class Economy_Gringotts extends AbstractEconomy {
     }
 
     @Override
-    public String currencyNamePlural(){
+    public String currencyNamePlural() {
         return org.gestern.gringotts.Configuration.config.currencyNamePlural;
     }
 
     @Override
-    public String currencyNameSingular(){
+    public String currencyNameSingular() {
         return org.gestern.gringotts.Configuration.config.currencyNameSingular;
     }
 
@@ -132,7 +131,7 @@ public class Economy_Gringotts extends AbstractEconomy {
     }
 
     @Override
-    public double getBalance(String playerName){
+    public double getBalance(String playerName) {
         AccountHolder owner = gringotts.accountHolderFactory.getAccount(playerName);
         if (owner == null) {
             return 0;
@@ -149,7 +148,7 @@ public class Economy_Gringotts extends AbstractEconomy {
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
 
-        if( amount < 0 ) {
+        if (amount < 0) {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "Cannot withdraw a negative amount.");
         }
 
@@ -158,9 +157,9 @@ public class Economy_Gringotts extends AbstractEconomy {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, playerName + " is not a valid account holder.");
         }
 
-        Account account = gringotts.accounting.getAccount( accountHolder );
+        Account account = gringotts.accounting.getAccount(accountHolder);
 
-        if(account.balance() >= amount && account.remove(amount)) {
+        if (account.balance() >= amount && account.remove(amount)) {
             //We has mulah!
             return new EconomyResponse(amount, account.balance(), ResponseType.SUCCESS, null);
         } else {
@@ -171,7 +170,7 @@ public class Economy_Gringotts extends AbstractEconomy {
     }
 
     @Override
-    public EconomyResponse depositPlayer(String playerName, double amount){
+    public EconomyResponse depositPlayer(String playerName, double amount) {
         if (amount < 0) {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "Cannot desposit negative funds");
         }
@@ -181,12 +180,12 @@ public class Economy_Gringotts extends AbstractEconomy {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, playerName + " is not a valid account holder.");
         }
 
-        Account account = gringotts.accounting.getAccount( accountHolder );
+        Account account = gringotts.accounting.getAccount(accountHolder);
 
-        if (account.add(amount)) {   
-            return new EconomyResponse( amount, account.balance(), ResponseType.SUCCESS, null);
+        if (account.add(amount)) {
+            return new EconomyResponse(amount, account.balance(), ResponseType.SUCCESS, null);
         } else {
-            return new EconomyResponse( 0, account.balance(), ResponseType.FAILURE, "Not enough capacity to store that amount!");
+            return new EconomyResponse(0, account.balance(), ResponseType.FAILURE, "Not enough capacity to store that amount!");
         }
     }
 

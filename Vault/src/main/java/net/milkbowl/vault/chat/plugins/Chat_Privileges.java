@@ -61,10 +61,14 @@ public class Chat_Privileges extends Chat {
 
     private String getPlayerOrGroupInfoString(String world, String player, String key, String defaultValue) {
         String value = getPlayerInfoString(world, player, key, null);
-        if (value != null) return value;
+        if (value != null) {
+            return value;
+        }
 
         value = getGroupInfoString(world, getPrimaryGroup(world, player), key, null);
-        if (value != null) return value;
+        if (value != null) {
+            return value;
+        }
 
         return defaultValue;
     }

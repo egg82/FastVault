@@ -15,15 +15,10 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import ca.agnate.EconXP.EconXP;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
@@ -33,7 +28,10 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-import ca.agnate.EconXP.EconXP;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Economy_EconXP extends AbstractEconomy {
     private final Logger log;
@@ -46,7 +44,10 @@ public class Economy_EconXP extends AbstractEconomy {
         this.plugin = plugin;
         this.log = plugin.getLogger();
         Bukkit.getServer().getPluginManager().registerEvents(new EconomyServerListener(this), plugin);
-        log.log(Level.WARNING, "EconXP is an integer only economy, you may notice inconsistencies with accounts if you do not setup your other econ using plugins accordingly!");
+        log.log(
+                Level.WARNING,
+                "EconXP is an integer only economy, you may notice inconsistencies with accounts if you do not setup your other econ using plugins accordingly!"
+        );
         // Load Plugin in case it was loaded before
         if (econ == null) {
             Plugin econ = plugin.getServer().getPluginManager().getPlugin("EconXP");
@@ -101,7 +102,7 @@ public class Economy_EconXP extends AbstractEconomy {
     public String format(double amount) {
         amount = Math.ceil(amount);
 
-        return String.format("%d %s", (int)amount, "experience");
+        return String.format("%d %s", (int) amount, "experience");
     }
 
     @Override
@@ -118,7 +119,9 @@ public class Economy_EconXP extends AbstractEconomy {
     public double getBalance(String playerName) {
         OfflinePlayer player = econ.getPlayer(playerName);
 
-        if ( player == null ) { return 0; }
+        if (player == null) {
+            return 0;
+        }
 
         return econ.getExp(player);
     }
@@ -127,16 +130,18 @@ public class Economy_EconXP extends AbstractEconomy {
     public boolean has(String playerName, double amount) {
         OfflinePlayer player = econ.getPlayer(playerName);
 
-        if ( player == null ) { return false; }
+        if (player == null) {
+            return false;
+        }
 
-        return econ.hasExp(player, (int) Math.ceil(amount) );
+        return econ.hasExp(player, (int) Math.ceil(amount));
     }
 
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         OfflinePlayer player = econ.getPlayer(playerName);
 
-        if ( player == null ) {
+        if (player == null) {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "Player does not exist");
         }
 
@@ -147,7 +152,7 @@ public class Economy_EconXP extends AbstractEconomy {
             return new EconomyResponse(0, balance, ResponseType.FAILURE, "Cannot withdraw negative funds");
         }
 
-        if ( econ.hasExp(player, (int) amount) == false ) {
+        if (econ.hasExp(player, (int) amount) == false) {
             return new EconomyResponse(0, balance, ResponseType.FAILURE, "Insufficient funds");
         }
 
@@ -162,7 +167,7 @@ public class Economy_EconXP extends AbstractEconomy {
     public EconomyResponse depositPlayer(String playerName, double amount) {
         OfflinePlayer player = econ.getPlayer(playerName);
 
-        if ( player == null ) {
+        if (player == null) {
             return new EconomyResponse(0, 0, ResponseType.FAILURE, "Player does not exist");
         }
 
@@ -173,7 +178,7 @@ public class Economy_EconXP extends AbstractEconomy {
             return new EconomyResponse(0, balance, ResponseType.FAILURE, "Cannot withdraw negative funds");
         }
 
-        econ.addExp(player, (int) amount );
+        econ.addExp(player, (int) amount);
         balance = econ.getExp(player);
 
         return new EconomyResponse(amount, balance, ResponseType.SUCCESS, null);
@@ -239,11 +244,11 @@ public class Economy_EconXP extends AbstractEconomy {
         return false;
     }
 
-	@Override
-	public int fractionalDigits() {
-		return 0;
-	}
-	
+    @Override
+    public int fractionalDigits() {
+        return 0;
+    }
+
 
     @Override
     public boolean hasAccount(String playerName, String worldName) {

@@ -15,15 +15,13 @@
  */
 package net.milkbowl.vault.economy.plugins;
 
-import java.util.List;
-
-import org.bukkit.plugin.Plugin;
-
 import com.gravypod.Dosh.Dosh;
 import com.gravypod.Dosh.MoneyUtils;
-
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.plugin.Plugin;
+
+import java.util.List;
 
 
 public class Economy_Dosh extends AbstractEconomy {
@@ -161,7 +159,7 @@ public class Economy_Dosh extends AbstractEconomy {
         return false;
     }
 
-    public class DoshAPIHandler extends MoneyUtils {}
+    public class DoshAPIHandler extends MoneyUtils { }
 
     @Override
     public boolean hasAccount(String playerName, String worldName) {

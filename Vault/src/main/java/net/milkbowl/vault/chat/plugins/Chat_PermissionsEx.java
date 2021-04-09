@@ -15,11 +15,8 @@
  */
 package net.milkbowl.vault.chat.plugins;
 
-import java.util.logging.Logger;
-
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
@@ -28,10 +25,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
-
 import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
+
+import java.util.logging.Logger;
 
 public class Chat_PermissionsEx extends Chat {
     private final Logger log;
@@ -98,18 +96,19 @@ public class Chat_PermissionsEx extends Chat {
 
     @Override
     public boolean isEnabled() {
-        if (chat == null)
+        if (chat == null) {
             return false;
-        else
+        } else {
             return chat.isEnabled();
+        }
     }
 
     private PermissionUser getUser(OfflinePlayer op) {
-    	return PermissionsEx.getPermissionManager().getUser(op.getUniqueId());
+        return PermissionsEx.getPermissionManager().getUser(op.getUniqueId());
     }
-    
+
     private PermissionUser getUser(String playerName) {
-    	return PermissionsEx.getPermissionManager().getUser(playerName);
+        return PermissionsEx.getPermissionManager().getUser(playerName);
     }
 
     @Override
@@ -131,7 +130,7 @@ public class Chat_PermissionsEx extends Chat {
     public String getPlayerInfoString(String world, String playerName, String node, String defaultValue) {
         return getUser(playerName).getOption(node, world, defaultValue);
     }
-    
+
     public int getPlayerInfoInteger(String world, OfflinePlayer op, String node, int defaultValue) {
         return getUser(op).getOptionInteger(node, world, defaultValue);
     }
@@ -147,7 +146,7 @@ public class Chat_PermissionsEx extends Chat {
     public String getPlayerInfoString(String world, OfflinePlayer op, String node, String defaultValue) {
         return getUser(op).getOption(node, world, defaultValue);
     }
-    
+
     public void setPlayerInfoInteger(String world, OfflinePlayer op, String node, int value) {
         PermissionUser user = getUser(op);
         if (user != null) {
@@ -287,7 +286,7 @@ public class Chat_PermissionsEx extends Chat {
             group.setOption(node, world, value);
         }
     }
-    
+
     public String getPlayerPrefix(String world, OfflinePlayer op) {
         PermissionUser user = getUser(op);
         if (user != null) {
